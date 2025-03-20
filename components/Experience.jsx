@@ -16,7 +16,7 @@ export default function Experience() {
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[2, 2, 2]} intensity={0.85} />
-      <OrbitControls />
+      <OrbitControls makeDefault />
       <mesh ref={testCube}>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="crimson" />
