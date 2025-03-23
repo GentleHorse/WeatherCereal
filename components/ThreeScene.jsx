@@ -5,19 +5,17 @@ import Experience from "./Experience.jsx";
 import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
 
 export default function ThreeScene() {
-  const { isFetching, error, weatherData } = useFetchWeatherData("milan");
+  const { isFetching, error, weatherData } = useFetchWeatherData("kyoto");
 
   return (
     <>
       <Canvas
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 100,
-          position: [2, 7, 2],
-        }}
+        flat
+        shadows
+        gl={{ antialias: false }}
+        camera={{ position: [-20, 25, -10], near: 30, far: 55, fov: 12 }}
       >
-        <Experience weatherData={weatherData}  />
+        <Experience weatherData={weatherData} />
       </Canvas>
 
       {/* <section className="absolute top-10 left-14">

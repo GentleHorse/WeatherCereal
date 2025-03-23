@@ -1,9 +1,11 @@
 "use client";
 
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import PostProcessingEffects from "./postprocessing/PostProcessingEffects.jsx";
 import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
+import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 
 export default function Experience({ weatherData }) {
   return (
@@ -11,19 +13,13 @@ export default function Experience({ weatherData }) {
       <Perf position="top-left" />
       <OrbitControls makeDefault />
 
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[2, 2, 2]} intensity={0.85} />
+      <CustomEnvironment />
 
-      <Environment preset="apartment" />
-
-      <color args={["#FCFCFC"]} attach="background" />
+      <PostProcessingEffects />
 
       <Physics debug={true} gravity={[0, -1.625, 0]}>
-        <RigidBody type="fixed">
-          <mesh>
-            <boxGeometry args={[10, 0.5, 10]} />
-            <meshStandardMaterial color={"white"} />
-          </mesh>
+        <RigidBody type="fixed" restitution={0.1}>
+          <CuboidCollider restitution={0.1} args={[1000, 1, 1000]} />
         </RigidBody>
 
         {!!weatherData && <FallingWeatherIcons data={weatherData.hourly[0]} />}

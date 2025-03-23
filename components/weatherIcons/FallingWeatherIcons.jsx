@@ -223,7 +223,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
         key: "instance_" + i,
         position: [
           (Math.random() - 0.5) * Icon_Model_Area_X,
-          Icon_Model_Area_Y + i * 1.25,
+          Icon_Model_Area_Y + i * 0.15,
           (Math.random() - 0.5) * Icon_Model_Area_Z,
         ],
         rotation: [Math.random(), Math.random(), Math.random()],
@@ -239,7 +239,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
       {weatherGeometry && (
         <group {...props}>
           <Suspense>
-            <InstancedRigidBodies instances={instances} restitution={0.5}>
+            <InstancedRigidBodies instances={instances} restitution={0.25}>
               <instancedMesh
                 castShadow
                 args={[undefined, undefined, objectsCount]}
