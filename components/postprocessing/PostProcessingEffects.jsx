@@ -6,6 +6,7 @@ import {
   EffectComposer,
   ToneMapping,
 } from "@react-three/postprocessing";
+import { ToneMappingMode } from 'postprocessing'
 import { useControls } from "leva";
 
 export default function PostProcessingEffects() {
@@ -18,7 +19,7 @@ export default function PostProcessingEffects() {
     <EffectComposer disableNormalPass>
       <N8AO aoRadius={0.5} intensity={1} />
       <DepthOfField {...depthOfFieldConfig} target={[0, 0, 0]} />
-      <ToneMapping />
+      <ToneMapping mode={ ToneMappingMode.ACES_FILMIC } />
     </EffectComposer>
   );
 }
