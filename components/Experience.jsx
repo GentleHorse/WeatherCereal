@@ -7,8 +7,6 @@ import PostProcessingEffects from "./postprocessing/PostProcessingEffects.jsx";
 import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
 import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 
-import TestCube from "./test/TestCube.jsx";
-
 export default function Experience({ weatherData, city }) {
   return (
     <>
@@ -28,26 +26,34 @@ export default function Experience({ weatherData, city }) {
         {!!weatherData && <FallingWeatherIcons data={weatherData.hourly[0]} />}
       </Physics>
 
-      <TestCube />
-
-      <group position={[0, 0, 0]}>
-        <Center>
-          <Text3D
-            font="./fonts/helvetiker_regular.typeface.json"
-            size={1.5}
-            height={0.2}
-            curveSegments={12}
-            bevelEnabled
-            bevelThickness={0.02}
-            bevelSize={0.02}
-            bevelOffset={0}
-            bevelSegments={5}
-          >
-            {city}
-            <meshStandardMaterial color="white" />
-          </Text3D>
-        </Center>
-      </group>
+      <CityName3D
+        city={city}
+        position={[1.5, 1.5, 1.5]}
+        rotation-y={-Math.PI * 0.75}
+      />
     </>
+  );
+}
+
+function CityName3D({ city, ...props }) {
+  return (
+    <group {...props}>
+      <Center>
+        <Text3D
+          font="./fonts/helvetiker_regular.typeface.json"
+          size={1.25}
+          height={0.2}
+          curveSegments={12}
+          bevelEnabled
+          bevelThickness={0.05}
+          bevelSize={0.05}
+          bevelOffset={0}
+          bevelSegments={5}
+        >
+          {city}
+          <meshStandardMaterial color="white" />
+        </Text3D>
+      </Center>
+    </group>
   );
 }

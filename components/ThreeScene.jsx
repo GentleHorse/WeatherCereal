@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
 import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
 
-const CITY_NAME = "Amsterdam";
+const CITY_NAME = "Paris";
 
 export default function ThreeScene() {
   const { isFetching, error, weatherData } = useFetchWeatherData(CITY_NAME);
@@ -15,7 +15,7 @@ export default function ThreeScene() {
         flat
         shadows
         gl={{ antialias: false }}
-        camera={{ position: [-20, 25, -10], near: 30, far: 55, fov: 12 }}
+        camera={{ position: [-30, 35, -10], near: 30, far: 55, fov: 12 }}
       >
         <Experience weatherData={weatherData} city={CITY_NAME} />
       </Canvas>
