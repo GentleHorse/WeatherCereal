@@ -4,8 +4,10 @@ import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
 import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
 
+const CITY_NAME = "Amsterdam";
+
 export default function ThreeScene() {
-  const { isFetching, error, weatherData } = useFetchWeatherData("kyoto");
+  const { isFetching, error, weatherData } = useFetchWeatherData(CITY_NAME);
 
   return (
     <>
@@ -15,7 +17,7 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [-20, 25, -10], near: 30, far: 55, fov: 12 }}
       >
-        <Experience weatherData={weatherData} />
+        <Experience weatherData={weatherData} city={CITY_NAME} />
       </Canvas>
 
       {/* <section className="absolute top-10 left-14">

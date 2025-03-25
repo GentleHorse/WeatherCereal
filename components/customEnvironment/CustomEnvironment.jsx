@@ -7,7 +7,7 @@ export default function CustomEnvironment() {
     <>
       <color attach="background" args={["#f0f0f0"]} />
 
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.75} />
       <directionalLight
         position={[-10, 10, 5]}
         shadow-mapSize={[256, 256]}
@@ -18,14 +18,14 @@ export default function CustomEnvironment() {
       </directionalLight>
 
       <Environment resolution={32}>
-        <Lightformer position={[10, 10, 10]} scale={10} intensity={4} />
+        <Lightformer position={[10, 10, 10]} scale={10} intensity={10} />
         <Lightformer
           position={[10, 0, -10]}
           scale={10}
-          color="red"
-          intensity={6}
+          color="#f0f0f0"
+          intensity={12}
         />
-        <Lightformer position={[-10, -10, -10]} scale={10} intensity={4} />
+        <Lightformer position={[-10, -10, -10]} scale={10} intensity={10} />
       </Environment>
     </>
   );
