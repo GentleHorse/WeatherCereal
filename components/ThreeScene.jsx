@@ -15,7 +15,7 @@ export default function ThreeScene() {
         flat
         shadows
         gl={{ antialias: false }}
-        camera={{ position: [-30, 35, -10], near: 30, far: 55, fov: 12 }}
+        camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
         <Experience weatherData={weatherData} city={CITY_NAME} />
       </Canvas>

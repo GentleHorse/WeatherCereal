@@ -6,10 +6,10 @@ import {
   EffectComposer,
   ToneMapping,
 } from "@react-three/postprocessing";
-import { ToneMappingMode } from 'postprocessing'
+import { ToneMappingMode } from "postprocessing";
 import { useControls } from "leva";
 
-export default function PostProcessingEffects() {
+export default function PostProcessingEffects({ depthOfField = true }) {
   const depthOfFieldConfig = useControls("Depth of Field", {
     focusRange: { value: 0.1, step: 0.001, min: 0, max: 0.5 },
     bokehScale: { value: 10, step: 0.001, min: 0, max: 50 },
@@ -18,8 +18,10 @@ export default function PostProcessingEffects() {
   return (
     <EffectComposer disableNormalPass>
       <N8AO aoRadius={0.5} intensity={1} />
-      <DepthOfField {...depthOfFieldConfig} target={[0, 0, 0]} />
-      <ToneMapping mode={ ToneMappingMode.ACES_FILMIC } />
+      {!!depthOfField && (
+        <DepthOfField {...depthOfFieldConfig} target={[0, 0, 0]} />
+      )}
+      <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
     </EffectComposer>
   );
 }
