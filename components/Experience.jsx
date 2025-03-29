@@ -15,7 +15,7 @@ export default function Experience({ weatherData, city }) {
       <OrbitControls makeDefault />
       <axesHelper visible={true} />
 
-      <CustomEnvironment />
+      <CustomEnvironment backgroundColor={true} />
 
       <PostProcessingEffects depthOfField={false} />
 
