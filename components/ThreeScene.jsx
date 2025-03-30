@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
 import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
 import { APP_STATE, useStore } from "@/stores/store.js";
+import Modal from "./modal/Modal.jsx";
 
 const CITY_NAME = "Paris";
 
@@ -25,7 +26,25 @@ export default function ThreeScene() {
         <Experience weatherData={weatherData} city={CITY_NAME} />
       </Canvas>
 
+      {/* {appState === APP_STATE.MENU && (
+        <Modal className="absolute w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/15">
+          <h1>This is modal</h1>
+        </Modal>
+      )} */}
+
+      <Modal className="absolute w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/15">
+        <h1>This is modal</h1>
+      </Modal>
+
       <section className="absolute top-0">
+        <button
+          className="m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
+          onClick={() => {
+            changeAppState(APP_STATE.MENU);
+          }}
+        >
+          Menu
+        </button>
         <button
           className="m-2 p-2 rounded-xl bg-pink-900 text-pink-200"
           onClick={() => {

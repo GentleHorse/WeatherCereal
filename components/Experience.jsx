@@ -38,9 +38,9 @@ export default function Experience({ weatherData, city }) {
       )}
       <WeatherText3D text={city} position={[1.0, 0, -2.0]} top left />
 
-      {!!weatherData && (
+      {/* {!!weatherData && (
         <PrecipitationBars weatherData={weatherData} barScale={0.05} />
-      )}
+      )} */}
     </>
   );
 }
