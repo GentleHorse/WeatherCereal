@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
 import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
@@ -10,10 +11,20 @@ const CITY_NAME = "Paris";
 
 export default function ThreeScene() {
   const { isFetching, error, weatherData } = useFetchWeatherData(CITY_NAME);
-
   const { appState, changeAppState } = useStore((state) => state);
+  const [open, setOpen] = useState(false);
+
+  function modalCloseHandler() {
+    setOpen(false);
+    changeAppState(APP_STATE.PLAY);
+  }
+
+  useEffect(() => {
+    if (appState === APP_STATE.MENU) setOpen(true);
+  }, [appState]);
 
   console.log(appState);
+  console.log(open);
 
   return (
     <>
@@ -26,19 +37,18 @@ export default function ThreeScene() {
         <Experience weatherData={weatherData} city={CITY_NAME} />
       </Canvas>
 
-      {/* {appState === APP_STATE.MENU && (
-        <Modal className="absolute w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/15">
-          <h1>This is modal</h1>
-        </Modal>
-      )} */}
-
-      <Modal className="absolute w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/15">
+      <Modal
+        open={open}
+        onClose={modalCloseHandler}
+        className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/45"
+      >
         <h1>This is modal</h1>
+        <button className="focus:outline-none" onClick={modalCloseHandler}>Close</button>
       </Modal>
 
       <section className="absolute top-0">
         <button
-          className="m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
+          className="focus:outline-none m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
           onClick={() => {
             changeAppState(APP_STATE.MENU);
           }}
@@ -46,7 +56,7 @@ export default function ThreeScene() {
           Menu
         </button>
         <button
-          className="m-2 p-2 rounded-xl bg-pink-900 text-pink-200"
+          className="focus:outline-none m-2 p-2 rounded-xl bg-pink-900 text-pink-200"
           onClick={() => {
             changeAppState(APP_STATE.PLAY);
           }}
@@ -54,7 +64,7 @@ export default function ThreeScene() {
           Play
         </button>
         <button
-          className="m-2 p-2 rounded-xl bg-amber-600 text-amber-200"
+          className="focus:outline-none m-2 p-2 rounded-xl bg-amber-600 text-amber-200"
           onClick={() => {
             changeAppState(APP_STATE.TEMP);
           }}
@@ -62,7 +72,7 @@ export default function ThreeScene() {
           Temp
         </button>
         <button
-          className="m-2 p-2 rounded-xl bg-blue-950 text-blue-200"
+          className="focus:outline-none m-2 p-2 rounded-xl bg-blue-950 text-blue-200"
           onClick={() => {
             changeAppState(APP_STATE.PRECIPITATION);
           }}

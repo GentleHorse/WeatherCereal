@@ -11,7 +11,7 @@ import PrecipitationBars from "./precipitationBars/PrecipitationBars.jsx";
 export default function Experience({ weatherData, city }) {
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
       <OrbitControls makeDefault />
       <axesHelper visible={true} />
 
