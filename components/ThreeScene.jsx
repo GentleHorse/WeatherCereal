@@ -7,11 +7,12 @@ import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
 import { APP_STATE, useStore } from "@/stores/store.js";
 import Modal from "./modal/Modal.jsx";
 
-const CITY_NAME = "Paris";
-
 export default function ThreeScene() {
-  const { isFetching, error, weatherData } = useFetchWeatherData(CITY_NAME);
   const { appState, changeAppState } = useStore((state) => state);
+  const [city, setCity] = useState("");
+  const [isFetching, setIsFetching] = useState();
+  const [error, setError] = useState();
+  const [weather, setWeather] = useState();
   const [open, setOpen] = useState(false);
 
   function modalCloseHandler() {
@@ -23,8 +24,31 @@ export default function ThreeScene() {
     if (appState === APP_STATE.MENU) setOpen(true);
   }, [appState]);
 
+  function cityInputHandler(event) {
+    setCity(event.target.value);
+  }
+
+  async function changeCity() {
+    setIsFetching(true);
+
+    try {
+      const response = await fetch(`/api/weather?city=${city}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setWeather(data);
+        modalCloseHandler();
+      } else {
+        setError({ message: data.message || "Error fetching weather data" });
+      }
+    } catch (error) {
+      setError({ message: error.message || "Failed to fetch weather data" });
+    }
+
+    setIsFetching(false);
+  }
+
   console.log(appState);
-  console.log(open);
 
   return (
     <>
@@ -34,7 +58,7 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
-        <Experience weatherData={weatherData} city={CITY_NAME} />
+        <Experience weatherData={weather} city={city.toUpperCase()} />
       </Canvas>
 
       <Modal
@@ -42,10 +66,29 @@ export default function ThreeScene() {
         onClose={modalCloseHandler}
         className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/45"
       >
-        <h1>This is modal</h1>
-        <button className="focus:outline-none" onClick={modalCloseHandler}>Close</button>
+        <h1>**TITLE PLACE HOLDER**</h1>
+        <input
+          className="focus:outline-none bg-blue-100"
+          type="text"
+          placeholder="City Name?"
+          value={city}
+          onChange={cityInputHandler}
+        />
+        <button
+          className="focus:outline-none m-2 p-3 bg-cyan-200 rounded-2xl"
+          onClick={changeCity}
+        >
+          Check Weather
+        </button>
+        <button
+          className="focus:outline-none m-2 p-3 bg-purple-200 rounded-2xl"
+          onClick={modalCloseHandler}
+        >
+          Go Back
+        </button>
       </Modal>
 
+      {/* ------ FOR BEBUG ---------------  */}
       <section className="absolute top-0">
         <button
           className="focus:outline-none m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
@@ -80,8 +123,13 @@ export default function ThreeScene() {
           Precipitation
         </button>
       </section>
+    </>
+  );
+}
 
-      {/* <section className="absolute top-10 left-14">
+// Memo ------------------------------------------------
+{
+  /* <section className="absolute top-10 left-14">
         {!isFetching &&
           weatherData &&
           weatherData.hourly.map((data, index) => (
@@ -94,7 +142,5 @@ export default function ThreeScene() {
               <p>Precipitation: {data.rain?.["1h"] || "0.00"} mm/h</p>
             </div>
           ))}
-      </section> */}
-    </>
-  );
+      </section> */
 }

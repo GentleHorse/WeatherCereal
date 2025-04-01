@@ -27,16 +27,18 @@ export default function Experience({ weatherData, city }) {
         {!!weatherData && <FallingWeatherIcons data={weatherData.hourly[0]} />}
       </Physics>
 
-      {!!weatherData && (
-        <WeatherText3D
-          text={`${weatherData.hourly[0].temp.toFixed(1)}°C`}
-          textSize={0.35}
-          position={[1.0, 0.75, -2.0]}
-          top
-          left
-        />
+      {!!weatherData && !!city && (
+        <>
+          <WeatherText3D
+            text={`${weatherData.hourly[0].temp.toFixed(1)}°C`}
+            textSize={0.35}
+            position={[1.0, 0.75, -2.0]}
+            top
+            left
+          />
+          <WeatherText3D text={city} position={[1.0, 0, -2.0]} top left />
+        </>
       )}
-      <WeatherText3D text={city} position={[1.0, 0, -2.0]} top left />
 
       {/* {!!weatherData && (
         <PrecipitationBars weatherData={weatherData} barScale={0.05} />
@@ -75,4 +77,3 @@ function WeatherText3D({
     </group>
   );
 }
-
