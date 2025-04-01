@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
-import { useFetchWeatherData } from "@/hook/useFetchWeatherData.js";
 import { APP_STATE, useStore } from "@/stores/store.js";
 import Modal from "./modal/Modal.jsx";
 
@@ -14,6 +13,7 @@ export default function ThreeScene() {
   const [error, setError] = useState();
   const [weather, setWeather] = useState();
   const [open, setOpen] = useState(false);
+  const [showDataRelatedModels, setShowDataRelatedModels] = useState(true);
 
   function modalCloseHandler() {
     setOpen(false);
@@ -30,6 +30,7 @@ export default function ThreeScene() {
 
   async function changeCity() {
     setIsFetching(true);
+    setShowDataRelatedModels(false);
 
     try {
       const response = await fetch(`/api/weather?city=${city}`);
@@ -37,6 +38,7 @@ export default function ThreeScene() {
 
       if (response.ok) {
         setWeather(data);
+        setShowDataRelatedModels(true);
         modalCloseHandler();
       } else {
         setError({ message: data.message || "Error fetching weather data" });
@@ -58,7 +60,11 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
-        <Experience weatherData={weather} city={city.toUpperCase()} />
+        <Experience
+          weatherData={weather}
+          city={city.toUpperCase()}
+          showDataRelatedModels={showDataRelatedModels}
+        />
       </Canvas>
 
       <Modal

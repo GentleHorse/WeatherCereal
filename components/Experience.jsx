@@ -8,7 +8,11 @@ import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
 import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 import PrecipitationBars from "./precipitationBars/PrecipitationBars.jsx";
 
-export default function Experience({ weatherData, city }) {
+export default function Experience({
+  weatherData,
+  city,
+  showDataRelatedModels,
+}) {
   return (
     <>
       {/* <Perf position="top-left" /> */}
@@ -24,10 +28,12 @@ export default function Experience({ weatherData, city }) {
           <CuboidCollider restitution={0.1} args={[1000, 0.1, 1000]} />
         </RigidBody>
 
-        {!!weatherData && <FallingWeatherIcons data={weatherData.hourly[0]} />}
+        {weatherData && showDataRelatedModels && (
+          <FallingWeatherIcons data={weatherData.hourly[0]} />
+        )}
       </Physics>
 
-      {!!weatherData && !!city && (
+      {showDataRelatedModels && weatherData && city && (
         <>
           <WeatherText3D
             text={`${weatherData.hourly[0].temp.toFixed(1)}°C`}
