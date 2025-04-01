@@ -8,24 +8,28 @@ import Modal from "./modal/Modal.jsx";
 
 export default function ThreeScene() {
   const { appState, changeAppState } = useStore((state) => state);
+
+  const [open, setOpen] = useState(false);
+  const [userInputCityName, setUserInputCityName] = useState("");
   const [city, setCity] = useState("");
   const [isFetching, setIsFetching] = useState();
   const [error, setError] = useState();
   const [weather, setWeather] = useState();
-  const [open, setOpen] = useState(false);
   const [showDataRelatedModels, setShowDataRelatedModels] = useState(true);
-
-  function modalCloseHandler() {
-    setOpen(false);
-    changeAppState(APP_STATE.PLAY);
-  }
 
   useEffect(() => {
     if (appState === APP_STATE.MENU) setOpen(true);
   }, [appState]);
 
-  function cityInputHandler(event) {
-    setCity(event.target.value);
+  function modalCloseHandler() {
+    setOpen(false);
+    setUserInputCityName("");
+    setError("");
+    changeAppState(APP_STATE.PLAY);
+  }
+
+  function userInputCityNameHandler(event) {
+    setUserInputCityName(event.target.value);
   }
 
   async function changeCity() {
@@ -33,11 +37,12 @@ export default function ThreeScene() {
     setShowDataRelatedModels(false);
 
     try {
-      const response = await fetch(`/api/weather?city=${city}`);
+      const response = await fetch(`/api/weather?city=${userInputCityName}`);
       const data = await response.json();
 
       if (response.ok) {
         setWeather(data);
+        setCity(userInputCityName);
         setShowDataRelatedModels(true);
         modalCloseHandler();
       } else {
@@ -72,26 +77,35 @@ export default function ThreeScene() {
         onClose={modalCloseHandler}
         className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/45"
       >
-        <h1>**TITLE PLACE HOLDER**</h1>
-        <input
-          className="focus:outline-none bg-blue-100"
-          type="text"
-          placeholder="City Name?"
-          value={city}
-          onChange={cityInputHandler}
-        />
-        <button
-          className="focus:outline-none m-2 p-3 bg-cyan-200 rounded-2xl"
-          onClick={changeCity}
-        >
-          Check Weather
-        </button>
-        <button
-          className="focus:outline-none m-2 p-3 bg-purple-200 rounded-2xl"
-          onClick={modalCloseHandler}
-        >
-          Go Back
-        </button>
+        <section className="h-full flex flex-col items-center justify-center gap-4">
+          <h1 className="font-extrabold text-4xl text-slate-900">
+            Weather Cereal
+          </h1>
+          <input
+            className={`focus:outline-none px-2 py-4 w-4/5 text-center rounded-2xl ${
+              error ? "text-pink-600 bg-pink-300" : "text-blue-950 bg-blue-100"
+            }`}
+            type="text"
+            placeholder="City Name?"
+            value={userInputCityName}
+            onChange={userInputCityNameHandler}
+          />
+          {error && <p className="text-pink-600">{error.message}</p>}
+          <div className="flex flex-row">
+            <button
+              className="focus:outline-none hover:cursor-pointer p-3 bg-orange-500 text-orange-50 rounded-2xl"
+              onClick={changeCity}
+            >
+              Check Weather
+            </button>
+            <button
+              className="focus:outline-none hover:cursor-pointer p-3 text-slate-700 rounded-2xl"
+              onClick={modalCloseHandler}
+            >
+              Go Back
+            </button>
+          </div>
+        </section>
       </Modal>
 
       {/* ------ FOR BEBUG ---------------  */}
