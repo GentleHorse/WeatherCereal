@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { OrbitControls, Text3D, Center } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
@@ -7,7 +8,6 @@ import PostProcessingEffects from "./postprocessing/PostProcessingEffects.jsx";
 import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
 import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 import Stage from "./stage/Stage.jsx";
-import { useEffect, useState } from "react";
 
 const WEATHER_SWEET_UNIT_SIZE = 0.15;
 const WEATHER_SWEET_UNIT_GAP = 0.15;
