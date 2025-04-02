@@ -25,6 +25,7 @@ export default function ThreeScene() {
     setOpen(false);
     setUserInputCityName("");
     setError("");
+    setShowDataRelatedModels(true);
     changeAppState(APP_STATE.PLAY);
   }
 
@@ -39,11 +40,10 @@ export default function ThreeScene() {
     try {
       const response = await fetch(`/api/weather?city=${userInputCityName}`);
       const data = await response.json();
-
+      
       if (response.ok) {
         setWeather(data);
         setCity(userInputCityName);
-        setShowDataRelatedModels(true);
         modalCloseHandler();
       } else {
         setError({ message: data.message || "Error fetching weather data" });

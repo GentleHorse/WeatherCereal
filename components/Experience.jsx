@@ -37,12 +37,18 @@ export default function Experience({
         <>
           <WeatherText3D
             text={`${weatherData.hourly[0].temp.toFixed(1)}°C`}
-            textSize={0.35}
+            textSize={0.275}
             position={[1.0, 0.75, -2.0]}
             top
             left
           />
-          <WeatherText3D text={city} position={[1.0, 0, -2.0]} top left />
+          <WeatherText3D
+            text={city}
+            textSize={0.4}
+            position={[1.0, 0, -2.0]}
+            top
+            left
+          />
         </>
       )}
 
