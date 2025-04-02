@@ -7,6 +7,7 @@ import PostProcessingEffects from "./postprocessing/PostProcessingEffects.jsx";
 import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
 import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 import PrecipitationBars from "./precipitationBars/PrecipitationBars.jsx";
+import Stage from "./stage/Stage.jsx";
 
 export default function Experience({
   weatherData,
@@ -17,16 +18,18 @@ export default function Experience({
     <>
       {/* <Perf position="top-left" /> */}
       <OrbitControls makeDefault />
-      <axesHelper visible={true} />
+      {/* <axesHelper visible={true} /> */}
 
       <CustomEnvironment backgroundColor={true} />
 
-      <PostProcessingEffects depthOfField={false} />
+      <PostProcessingEffects depthOfField={true} />
 
-      <Physics debug={true} gravity={[0, -1.625, 0]}>
+      <Physics debug={false} gravity={[0, -1.625, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>
           <CuboidCollider restitution={0.1} args={[1000, 0.1, 1000]} />
         </RigidBody>
+
+        <Stage scale={0.75} position-y={-0.5} />
 
         {weatherData && showDataRelatedModels && (
           <FallingWeatherIcons data={weatherData.hourly[0]} />

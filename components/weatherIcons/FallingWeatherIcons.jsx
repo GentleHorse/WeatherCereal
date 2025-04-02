@@ -3,11 +3,11 @@ import { useGLTF } from "@react-three/drei";
 import { InstancedRigidBodies } from "@react-three/rapier";
 import { Geometry, Base, Addition } from "@react-three/csg";
 
-const Icon_Model_Num = 80;
-const Icon_Model_Scale = 0.075;
-const Icon_Model_Area_X = 2.5;
+const Icon_Model_Num = 70;
+const Icon_Model_Scale = 0.035;
+const Icon_Model_Area_X = 1.75;
 const Icon_Model_Area_Y = 2.5;
-const Icon_Model_Area_Z = 2.5;
+const Icon_Model_Area_Z = 1.75;
 
 export default function FallingWeatherIcons({ data, ...props }) {
   /**
@@ -239,7 +239,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
       {weatherGeometry && (
         <group {...props}>
           <Suspense>
-            <InstancedRigidBodies instances={instances} restitution={0.25}>
+            <InstancedRigidBodies instances={instances} restitution={0.25} friction={0.25}>
               <instancedMesh
                 castShadow
                 args={[undefined, undefined, objectsCount]}
