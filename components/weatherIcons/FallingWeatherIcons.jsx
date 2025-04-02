@@ -239,7 +239,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
       {weatherGeometry && (
         <group {...props}>
           <Suspense>
-            <InstancedRigidBodies instances={instances} restitution={0.25} friction={0.25}>
+            <InstancedRigidBodies instances={instances} restitution={0.25} friction={0.1}>
               <instancedMesh
                 castShadow
                 args={[undefined, undefined, objectsCount]}

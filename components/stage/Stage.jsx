@@ -14,17 +14,28 @@ export default function Stage(props) {
       <mesh
         geometry={nodes.ground.geometry}
         material={materials["white-mat"]}
+        castShadow
+        receiveShadow
       />
       <mesh
         geometry={nodes["milk-pourer"].geometry}
         material={materials["white-mat"]}
         position={[-1.647, 1.78, 0]}
+        castShadow
+        receiveShadow
       />
 
-      <RigidBody type="fixed" colliders="trimesh" restitution={0.7} friction={0.25}>
+      <RigidBody
+        type="fixed"
+        colliders="trimesh"
+        restitution={0.7}
+        friction={0.25}
+      >
         <mesh
           geometry={nodes["cereal-bowl"].geometry}
           material={materials["white-mat"]}
+          castShadow
+          receiveShadow
         />
       </RigidBody>
     </group>
