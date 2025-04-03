@@ -9,7 +9,7 @@ export default function CustomEnvironment({ backgroundColor }) {
 
       <ambientLight intensity={0.75} />
       <directionalLight
-        intensity={1.5}
+        intensity={1.25}
         position={[-10, 10, 5]}
         shadow-mapSize={[256, 256]}
         shadow-bias={-0.0001}
