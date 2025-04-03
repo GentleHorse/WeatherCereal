@@ -16,6 +16,7 @@ export default function Experience({
   city,
   showDataRelatedModels,
 }) {
+
   return (
     <>
       <Perf position="top-left" />
@@ -24,7 +25,7 @@ export default function Experience({
 
       <CustomEnvironment backgroundColor={true} />
 
-      <PostProcessingEffects depthOfField={false} />
+      <PostProcessingEffects depthOfField={true} />
 
       <FloatingSakuraPetals />
 

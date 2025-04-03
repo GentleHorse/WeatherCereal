@@ -4,10 +4,11 @@ Command: npx gltfjsx@6.5.3 ./public/models/sakura-petal/sakura-petal.glb
 */
 
 import React from "react";
-import { useGLTF, Clone, Float } from "@react-three/drei";
+import { useGLTF, Clone } from "@react-three/drei";
 
 export default function SakuraPetal(props) {
   const { nodes, materials } = useGLTF("/models/sakura-petal/sakura-petal.glb");
+
   return (
     <group {...props} dispose={null}>
       <Clone

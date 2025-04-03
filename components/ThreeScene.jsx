@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
 import { APP_STATE, useStore } from "@/stores/store.js";
@@ -8,9 +8,9 @@ import Modal from "./modal/Modal.jsx";
 
 export default function ThreeScene() {
   const { appState, changeAppState } = useStore((state) => state);
+  const userInputCityName = useRef();
 
   const [open, setOpen] = useState(false);
-  const [userInputCityName, setUserInputCityName] = useState("");
   const [city, setCity] = useState("");
   const [isFetching, setIsFetching] = useState();
   const [error, setError] = useState();
@@ -23,14 +23,10 @@ export default function ThreeScene() {
 
   function modalCloseHandler() {
     setOpen(false);
-    setUserInputCityName("");
+    userInputCityName.current.value = "";
     setError("");
     setShowDataRelatedModels(true);
     changeAppState(APP_STATE.PLAY);
-  }
-
-  function userInputCityNameHandler(event) {
-    setUserInputCityName(event.target.value);
   }
 
   async function changeCity() {
@@ -38,12 +34,12 @@ export default function ThreeScene() {
     setShowDataRelatedModels(false);
 
     try {
-      const response = await fetch(`/api/weather?city=${userInputCityName}`);
+      const response = await fetch(`/api/weather?city=${userInputCityName.current.value}`);
       const data = await response.json();
 
       if (response.ok) {
         setWeather(data);
-        setCity(userInputCityName);
+        setCity(userInputCityName.current.value);
         modalCloseHandler();
       } else {
         setError({ message: data.message || "Error fetching weather data" });
@@ -82,13 +78,12 @@ export default function ThreeScene() {
             Weather Cereal
           </h1>
           <input
+            ref={userInputCityName}
             className={`focus:outline-none px-2 py-4 w-4/5 text-center rounded-2xl ${
               error ? "text-pink-600 bg-pink-300" : "text-blue-950 bg-blue-100"
             }`}
             type="text"
             placeholder="City Name?"
-            value={userInputCityName}
-            onChange={userInputCityNameHandler}
           />
           {error && <p className="text-pink-600">{error.message}</p>}
           <div className="flex flex-row">
