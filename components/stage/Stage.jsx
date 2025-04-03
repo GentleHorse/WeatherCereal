@@ -11,16 +11,53 @@ export default function Stage(props) {
   const { nodes, materials } = useGLTF("/models/stage/stage.glb");
   return (
     <group {...props} dispose={null}>
+      <RigidBody
+        type="fixed"
+        colliders="trimesh"
+        restitution={0.7}
+        friction={0.25}
+      >
+        <mesh
+          geometry={nodes["wood-spoon"].geometry}
+          material={materials["wood-test"]}
+          position={[-0.097, 0.184, 1.732]}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+
       <mesh
         geometry={nodes.ground.geometry}
         material={materials["white-mat"]}
         castShadow
         receiveShadow
       />
+      <RigidBody
+        type="fixed"
+        colliders="trimesh"
+        restitution={0.7}
+        friction={0.25}
+      >
+        <mesh
+          geometry={nodes["cereal-bowl"].geometry}
+          material={materials["cream-mat"]}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+
       <mesh
-        geometry={nodes["milk-pourer"].geometry}
-        material={materials["white-mat"]}
-        position={[-1.647, 1.78, 0]}
+        geometry={nodes["milk-pourer-v2"].geometry}
+        material={materials["cream-mat"]}
+        position={[-1.807, 2.642, 0]}
+        castShadow
+        receiveShadow
+      />
+
+      <mesh
+        geometry={nodes["milk-liquid-fixed"].geometry}
+        material={materials["milk-liquid"]}
+        position={[-1.189, 3.059, 0]}
         castShadow
         receiveShadow
       />
@@ -32,8 +69,9 @@ export default function Stage(props) {
         friction={0.25}
       >
         <mesh
-          geometry={nodes["cereal-bowl"].geometry}
-          material={materials["white-mat"]}
+          geometry={nodes["spoon-rest"].geometry}
+          material={materials["bamboo-test"]}
+          position={[-0.637, -0.035, 1.884]}
           castShadow
           receiveShadow
         />

@@ -19,40 +19,40 @@ export default function Experience({
   city,
   showDataRelatedModels,
 }) {
-  const weatherSweet = useRef();
+  // const weatherSweet = useRef();
 
-  function hoverStartAnimation() {
-    gsap.to(weatherSweet.current.scale, {
-      duration: 1.0,
-      ease: "bounce.out",
-      x: 1.25,
-      y: 1.25,
-      z: 1.25,
-    });
+  // function hoverStartAnimation() {
+  //   gsap.to(weatherSweet.current.scale, {
+  //     duration: 1.0,
+  //     ease: "bounce.out",
+  //     x: 1.25,
+  //     y: 1.25,
+  //     z: 1.25,
+  //   });
     
 
-    gsap.to(weatherSweet.current.position, {
-      duration: 1.0,
-      ease: "bounce.out",
-      y: 0.25,
-    });
-  }
+  //   gsap.to(weatherSweet.current.position, {
+  //     duration: 1.0,
+  //     ease: "bounce.out",
+  //     y: 0.25,
+  //   });
+  // }
 
-  function hoverEndAnimation() {
-    gsap.to(weatherSweet.current.scale, {
-      duration: 1.0,
-      ease: "bounce.out",
-      x: 1.0,
-      y: 1.0,
-      z: 1.0,
-    });
+  // function hoverEndAnimation() {
+  //   gsap.to(weatherSweet.current.scale, {
+  //     duration: 1.0,
+  //     ease: "bounce.out",
+  //     x: 1.0,
+  //     y: 1.0,
+  //     z: 1.0,
+  //   });
 
-    gsap.to(weatherSweet.current.position, {
-      duration: 1.0,
-      ease: "bounce.out",
-      y: 0.0,
-    });
-  }
+  //   gsap.to(weatherSweet.current.position, {
+  //     duration: 1.0,
+  //     ease: "bounce.out",
+  //     y: 0.0,
+  //   });
+  // }
 
   return (
     <>
@@ -64,14 +64,14 @@ export default function Experience({
 
       <PostProcessingEffects depthOfField={true} />
 
-      <group ref={weatherSweet} position={[1.25, 0, 2.5]}>
+      {/* <group ref={weatherSweet} position={[1.25, 0, 2.5]}>
         <WeatherSweet
           onPointerEnter={hoverStartAnimation}
           onPointerLeave={hoverEndAnimation}
           unitSize={WEATHER_SWEET_UNIT_SIZE}
           unitGap={WEATHER_SWEET_UNIT_GAP}
         />
-      </group>
+      </group> */}
 
       <Physics debug={false} gravity={[0, -1.625, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>

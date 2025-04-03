@@ -2,13 +2,14 @@
 
 import { Environment, Lightformer } from "@react-three/drei";
 
-export default function CustomEnvironment({backgroundColor}) {
+export default function CustomEnvironment({ backgroundColor }) {
   return (
     <>
       {!!backgroundColor && <color attach="background" args={["#f0f0f0"]} />}
 
       <ambientLight intensity={0.75} />
       <directionalLight
+        intensity={1.5}
         position={[-10, 10, 5]}
         shadow-mapSize={[256, 256]}
         shadow-bias={-0.0001}
