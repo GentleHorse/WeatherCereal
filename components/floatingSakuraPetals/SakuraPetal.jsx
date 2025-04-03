@@ -16,10 +16,10 @@ export default function SakuraPetal(props) {
           <meshStandardMaterial
             color="#FEDFE1"
             roughness={0.85}
-            castShadow
-            receiveShadow
           />
         }
+        castShadow
+        receiveShadow
       />
     </group>
   );

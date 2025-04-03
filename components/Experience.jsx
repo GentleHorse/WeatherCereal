@@ -24,7 +24,7 @@ export default function Experience({
 
       <CustomEnvironment backgroundColor={true} />
 
-      <PostProcessingEffects depthOfField={true} />
+      <PostProcessingEffects depthOfField={false} />
 
       <FloatingSakuraPetals />
 

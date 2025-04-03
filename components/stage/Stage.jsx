@@ -32,6 +32,7 @@ export default function Stage(props) {
         castShadow
         receiveShadow
       />
+
       <RigidBody
         type="fixed"
         colliders="trimesh"
