@@ -1,6 +1,7 @@
 "use client";
 
 import { Environment, Lightformer } from "@react-three/drei";
+import DappledShadowsMask from "../dappledShadowsMask/DappledShadowsMask.jsx";
 
 export default function CustomEnvironment({ backgroundColor }) {
   return (
@@ -17,6 +18,12 @@ export default function CustomEnvironment({ backgroundColor }) {
       >
         <orthographicCamera attach="shadow-camera" args={[-10, 10, -10, 10]} />
       </directionalLight>
+
+      <DappledShadowsMask
+        position={[-15, 18, 0]}
+        rotation={[0, Math.PI * 0.5, 0]}
+        scale={40.0}
+      />
 
       <Environment resolution={32}>
         <Lightformer position={[10, 10, 10]} scale={10} intensity={8} />

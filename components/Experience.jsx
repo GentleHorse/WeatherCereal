@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
 import { OrbitControls, Text3D, Center } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
@@ -16,7 +15,6 @@ export default function Experience({
   city,
   showDataRelatedModels,
 }) {
-
   return (
     <>
       <Perf position="top-left" />
@@ -25,10 +23,10 @@ export default function Experience({
 
       <CustomEnvironment backgroundColor={true} />
 
-      <PostProcessingEffects depthOfField={true} />
+      <PostProcessingEffects depthOfField={false} />
 
       <FloatingSakuraPetals />
-
+ 
       <Physics debug={false} gravity={[0, -1.625, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>
           <CuboidCollider restitution={0.1} args={[1000, 0.1, 1000]} />
@@ -86,6 +84,7 @@ function WeatherText3D({
           bevelOffset={0}
           bevelSegments={5}
           castShadow
+          receiveShadow
         >
           {text}
           <meshStandardMaterial color="white" />
