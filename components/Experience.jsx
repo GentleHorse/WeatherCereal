@@ -8,7 +8,7 @@ import PostProcessingEffects from "./postprocessing/PostProcessingEffects.jsx";
 import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
 import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 import Stage from "./stage/Stage.jsx";
-import FloatingSakuraPetals from "./floatingSakuraPetals/floatingSakuraPetals.jsx";
+import FloatingSakuraPetals from "./floatingSakuraPetals/FloatingSakuraPetals.jsx";
 
 export default function Experience({
   weatherData,
