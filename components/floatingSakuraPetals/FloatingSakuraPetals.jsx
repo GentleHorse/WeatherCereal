@@ -46,7 +46,7 @@ export default function FloatingSakuraPetals({ petalNum = 100, ...props }) {
             (Math.random() - 0.5) * 3.5,
             (Math.random() - 0.5) * 8.5,
           ]}
-          scale={0.25 + Math.random() * 0.15}
+          scale={0.25 + Math.random() * 0.25}
           rotation={[Math.random() * Math.PI, Math.random() * Math.PI, 0]}
         >
           <SakuraPetal />

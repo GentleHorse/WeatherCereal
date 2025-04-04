@@ -27,25 +27,24 @@ export default function Stage(props) {
       </RigidBody>
 
       <mesh
-        geometry={nodes.ground.geometry}
-        material={materials["white-mat"]}
-        position={[0, -0.055, 0]}
-        castShadow
-          receiveShadow
-      />
-      <mesh
         geometry={nodes["milk-pourer-v2"].geometry}
         material={materials["cream-mat"]}
         position={[-1.807, 2.642, 0]}
         castShadow
-          receiveShadow
+        receiveShadow
       />
       <mesh
         geometry={nodes["milk-liquid-fixed"].geometry}
         material={materials["milk-liquid"]}
         position={[-1.189, 3.059, 0]}
         castShadow
-          receiveShadow
+        receiveShadow
+      />
+      <mesh
+        geometry={nodes["zen-stone-ground"].geometry}
+        material={materials["zen-garden-ground"]}
+        castShadow
+        receiveShadow
       />
 
       <RigidBody
@@ -87,7 +86,7 @@ export default function Stage(props) {
         <mesh
           geometry={nodes["rock-for-expression"].geometry}
           material={materials["black-mat"]}
-          position={[1.493, 0.853, 4.035]}
+          position={[-1.558, 0, -6.578]}
           castShadow
           receiveShadow
         />

@@ -32,7 +32,7 @@ export default function Experience({
 
       <PostProcessingEffects depthOfField={true} />
 
-      <FloatingSakuraPetals />
+      <FloatingSakuraPetals petalNum={80} />
 
       {/* <mesh position={[0, -0.54, 0]} receiveShadow>
         <boxGeometry args={[5, 0.1, 5]} />
