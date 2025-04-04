@@ -20,7 +20,7 @@ export default function Stage(props) {
         <mesh
           geometry={nodes["wood-spoon"].geometry}
           material={materials["wood-test"]}
-          position={[-0.097, 0.184, 1.732]}
+          position={[-0.435, 0.356, 2.207]}
           castShadow
           receiveShadow
         />
@@ -29,38 +29,23 @@ export default function Stage(props) {
       <mesh
         geometry={nodes.ground.geometry}
         material={materials["white-mat"]}
+        position={[0, -0.055, 0]}
         castShadow
-        receiveShadow
-      />
-
-      <RigidBody
-        type="fixed"
-        colliders="trimesh"
-        restitution={0.7}
-        friction={0.25}
-      >
-        <mesh
-          geometry={nodes["cereal-bowl"].geometry}
-          material={materials["cream-mat"]}
-          castShadow
           receiveShadow
-        />
-      </RigidBody>
-
+      />
       <mesh
         geometry={nodes["milk-pourer-v2"].geometry}
         material={materials["cream-mat"]}
         position={[-1.807, 2.642, 0]}
         castShadow
-        receiveShadow
+          receiveShadow
       />
-
       <mesh
         geometry={nodes["milk-liquid-fixed"].geometry}
         material={materials["milk-liquid"]}
         position={[-1.189, 3.059, 0]}
         castShadow
-        receiveShadow
+          receiveShadow
       />
 
       <RigidBody
@@ -70,9 +55,39 @@ export default function Stage(props) {
         friction={0.25}
       >
         <mesh
-          geometry={nodes["spoon-rest"].geometry}
-          material={materials["bamboo-test"]}
-          position={[-0.637, -0.035, 1.884]}
+          geometry={nodes["rock-cereal-bowl"].geometry}
+          material={materials["black-mat"]}
+          position={[0, -0.245, 0]}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+
+      <RigidBody
+        type="fixed"
+        colliders="trimesh"
+        restitution={0.7}
+        friction={0.25}
+      >
+        <mesh
+          geometry={nodes["rock-spoon-rest"].geometry}
+          material={materials["black-mat"]}
+          position={[-0.727, 0, 2.124]}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+
+      <RigidBody
+        type="fixed"
+        colliders="trimesh"
+        restitution={0.7}
+        friction={0.25}
+      >
+        <mesh
+          geometry={nodes["rock-for-expression"].geometry}
+          material={materials["black-mat"]}
+          position={[1.493, 0.853, 4.035]}
           castShadow
           receiveShadow
         />

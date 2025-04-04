@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
 
 export default function DappledShadowsMask(props) {
-  const shadowTexture = useTexture("/textures/dappled-shadow-texture-01.png");
+  const shadowTexture = useTexture("/textures/dappled-shadow-texture-02.png");
   return (
     <>
       <mesh

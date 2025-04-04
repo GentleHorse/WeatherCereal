@@ -1,5 +1,6 @@
 "use client";
 
+import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
@@ -34,7 +35,9 @@ export default function ThreeScene() {
     setShowDataRelatedModels(false);
 
     try {
-      const response = await fetch(`/api/weather?city=${userInputCityName.current.value}`);
+      const response = await fetch(
+        `/api/weather?city=${userInputCityName.current.value}`
+      );
       const data = await response.json();
 
       if (response.ok) {
