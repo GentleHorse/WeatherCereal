@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import { APP_STATE, useStore } from "@/stores/store.js";
 
 export default function LoadingScene() {
@@ -12,9 +13,15 @@ export default function LoadingScene() {
     };
   }, []);
 
+  const testCube = useRef()
+
+  useFrame((state, delta) => {
+    testCube.current.rotation.y += delta;
+  })
+
   return (
     <>
-      <mesh>
+      <mesh ref={testCube}>
         <boxGeometry />
         <meshNormalMaterial />
       </mesh>
