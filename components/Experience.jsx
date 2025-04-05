@@ -17,7 +17,7 @@ export default function Experience({
 }) {
   return (
     <>
-      {/* <Perf position="top-left" /> */}
+      <Perf position="top-left" />
       <OrbitControls
         makeDefault
         enableZoom={false}
@@ -30,14 +30,9 @@ export default function Experience({
 
       <CustomEnvironment backgroundColor={true} />
 
-      <PostProcessingEffects depthOfField={true} />
+      <PostProcessingEffects depthOfField={false} />
 
       <FloatingSakuraPetals petalNum={80} />
-
-      {/* <mesh position={[0, -0.54, 0]} receiveShadow>
-        <boxGeometry args={[5, 0.1, 5]} />
-        <meshStandardMaterial color="#B4866B" />
-      </mesh> */}
 
       <Physics debug={false} gravity={[0, -1.625, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>

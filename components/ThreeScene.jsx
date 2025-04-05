@@ -1,11 +1,11 @@
 "use client";
 
-import * as THREE from "three";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import Experience from "./Experience.jsx";
 import { APP_STATE, useStore } from "@/stores/store.js";
+import Experience from "./Experience.jsx";
 import Modal from "./modal/Modal.jsx";
+import LoadingScene from "./loadingScene/LoadingScene.jsx";
 
 export default function ThreeScene() {
   const { appState, changeAppState } = useStore((state) => state);
@@ -64,11 +64,13 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
-        <Experience
-          weatherData={weather}
-          city={city.toUpperCase()}
-          showDataRelatedModels={showDataRelatedModels}
-        />
+        <Suspense fallback={<LoadingScene />}>
+          <Experience
+            weatherData={weather}
+            city={city.toUpperCase()}
+            showDataRelatedModels={showDataRelatedModels}
+          />
+        </Suspense>
       </Canvas>
 
       <Modal
