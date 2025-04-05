@@ -1,30 +1,14 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-import { APP_STATE, useStore } from "@/stores/store.js";
+import { Html } from "@react-three/drei";
 
 export default function LoadingScene() {
-  const { changeAppState } = useStore((state) => state);
-
-  useEffect(() => {
-    return () => {
-      changeAppState(APP_STATE.MENU);
-    };
-  }, []);
-
-  const testCube = useRef()
-
-  useFrame((state, delta) => {
-    testCube.current.rotation.y += delta;
-  })
-
   return (
     <>
-      <mesh ref={testCube}>
-        <boxGeometry />
-        <meshNormalMaterial />
-      </mesh>
+      <Html fullscreen>
+        <div className="flex flex-col gap-10 items-center justify-center h-screen bg-[#1C1C1C]">
+          <span className="loader threeD"></span>
+          <p className="w-[200px] text-center text-[10px] xl:text-sm font-mono text-[#FEDFE1]">Loading .....</p>
+        </div>
+      </Html>
     </>
   );
 }

@@ -40,6 +40,10 @@ body {
   animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
 }
 
+.loader.threeD {
+  color: #FEDFE1;
+}
+
 @keyframes mltShdSpin {
   0% {
     box-shadow: 0 -0.83em 0 -0.4em,

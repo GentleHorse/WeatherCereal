@@ -64,7 +64,7 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
-        <Suspense fallback={<LoadingScene />}>
+        <Suspense fallback={<Loading />}>
           <Experience
             weatherData={weather}
             city={city.toUpperCase()}
@@ -171,6 +171,25 @@ export default function ThreeScene() {
           Precipitation
         </button>
       </section>
+    </>
+  );
+}
+
+function Loading() {
+  const { appState, changeAppState } = useStore((state) => state);
+
+  useEffect(() => {
+    return () => {
+      // First loaded time only
+      if (appState === APP_STATE.LOADING) {
+        changeAppState(APP_STATE.MENU);
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      <LoadingScene />
     </>
   );
 }

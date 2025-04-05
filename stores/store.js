@@ -9,6 +9,6 @@ export const APP_STATE = {
 };
 
 export const useStore = create((set) => ({
-  appState: APP_STATE.PLAY,
+  appState: APP_STATE.LOADING,
   changeAppState: (newState) => set({ appState: newState }),
 }));
