@@ -2,6 +2,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { InstancedRigidBodies } from "@react-three/rapier";
 import { Geometry, Base, Addition } from "@react-three/csg";
+import WeatherAudio from "../weatherAudio/WeatherAudio";
 
 const Icon_Model_Num = 70;
 const Icon_Model_Scale = 0.035;
@@ -235,11 +236,18 @@ export default function FallingWeatherIcons({ data, ...props }) {
 
   return (
     <>
+      {/* AUDIO */}
+      <WeatherAudio weather={weatherCondition} />
+
       {/* HUNDREDS OF OBJECTS */}
       {weatherGeometry && (
         <group {...props}>
           <Suspense>
-            <InstancedRigidBodies instances={instances} restitution={0.25} friction={0.1}>
+            <InstancedRigidBodies
+              instances={instances}
+              restitution={0.25}
+              friction={0.1}
+            >
               <instancedMesh
                 castShadow
                 args={[undefined, undefined, objectsCount]}
