@@ -1,33 +1,25 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import createFadableAudio from "@/utils/createAudioWithFade.js";
 
 export default function WeatherAudio({ weather }) {
-  const audioRef = useRef(null);
-
   useEffect(() => {
     if (!weather) return;
 
-    // const audio = new Audio(`/sounds/${weather}.mp3`)
-    const audio = new Audio(`/sounds/clear.mp3`);
-    audioRef.current = audio;
-    audio.loop = true;
-    audio.volume = 0.5;
+    const { audio, fadeIn, fadeOut } = createFadableAudio(
+      `/sounds/${weather}.mp3`,
+      1000, // fade time (miliseconds)
+      0.5 // volume
+    );
 
-    // Play only after it's ready
-    const handleReady = () => {
-      audio.play().catch((err) => {
-        console.warn("Playback failed:", err);
-      });
-    };
-
-    audio.addEventListener("canplaythrough", handleReady);
+    audio.addEventListener("canplaythrough", fadeIn);
 
     return () => {
       // Clean up previous audio
-      audio.pause();
+      fadeOut();
       audio.src = "";
-      audio.removeEventListener("canplaythrough", handleReady);
+      audio.removeEventListener("canplaythrough", fadeIn);
     };
   }, [weather]);
 
