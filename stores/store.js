@@ -9,5 +9,9 @@ export const APP_STATE = {
 
 export const useStore = create((set) => ({
   appState: APP_STATE.LOADING,
+  audioEnabled: false,
+  hasInteracted: false,
   changeAppState: (newState) => set({ appState: newState }),
+  changeAudioEnabled: (newState) => set({ audioEnabled: newState }),
+  setHasInteracted: (newState) => set({ hasInteracted: newState }),
 }));

@@ -6,6 +6,7 @@ import { APP_STATE, useStore } from "@/stores/store.js";
 import Experience from "./Experience.jsx";
 import Modal from "./modal/Modal.jsx";
 import LoadingScene from "./loadingScene/LoadingScene.jsx";
+import AudioConsentScreen from "./weatherAudio/AudioConsentScreen.jsx";
 
 export default function ThreeScene() {
   const { appState, changeAppState } = useStore((state) => state);
@@ -18,18 +19,21 @@ export default function ThreeScene() {
   const [weather, setWeather] = useState(null);
   const [showDataRelatedModels, setShowDataRelatedModels] = useState(true);
 
+  // Intial render only - set data based on user's geo location
   useEffect(() => {
     const getLocationAndFetchWeather = async () => {
       if (!weather && typeof window !== "undefined") {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-  
+
             try {
               // Send lat/lon to your server-side API (secure!)
-              const res = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`);
+              const res = await fetch(
+                `/api/weather?lat=${latitude}&lon=${longitude}`
+              );
               const data = await res.json();
-  
+
               if (res.ok) {
                 setWeather(data);
                 setCity(data.city || ""); // Optional: your API could return the city name too
@@ -38,7 +42,10 @@ export default function ThreeScene() {
                 throw new Error(data.message || "Failed to fetch weather");
               }
             } catch (err) {
-              console.warn("Weather fetch failed. Ask user for city name:", err);
+              console.warn(
+                "Weather fetch failed. Ask user for city name:",
+                err
+              );
               changeAppState(APP_STATE.CITY); // fallback to city modal
             }
           },
@@ -49,10 +56,11 @@ export default function ThreeScene() {
         );
       }
     };
-  
+
     getLocationAndFetchWeather();
   }, []);
 
+  // Modal
   useEffect(() => {
     if (appState === APP_STATE.CITY) setOpen(true);
   }, [appState]);
@@ -109,6 +117,8 @@ export default function ThreeScene() {
           )}
         </Suspense>
       </Canvas>
+
+      {appState === APP_STATE.PLAY && <AudioConsentScreen />}
 
       <Modal
         open={open}
@@ -221,25 +231,6 @@ export default function ThreeScene() {
           Play
         </button>
       </section>
-    </>
-  );
-}
-
-function Loading() {
-  const { appState, changeAppState } = useStore((state) => state);
-
-  useEffect(() => {
-    return () => {
-      // First loaded time only
-      if (appState === APP_STATE.LOADING) {
-        changeAppState(APP_STATE.CITY);
-      }
-    };
-  }, []);
-
-  return (
-    <>
-      <LoadingScene />
     </>
   );
 }
