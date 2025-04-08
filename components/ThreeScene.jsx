@@ -303,7 +303,7 @@ export default function ThreeScene() {
         onClose={dataModalCloseHandler}
         className="relative overflow-hidden no-scrollbar m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
-        <section className="absolute top-[16px] mx-auto">
+        <section className="absolute top-[16px] w-full">
           {weatherCondition !== null && (
             <video
               ref={weatherIconVideo}
@@ -311,7 +311,7 @@ export default function ThreeScene() {
               muted
               loop={false}
               playsInline
-              className="w-[240px] h-[240px] object-cover pointer-events-none"
+              className="mx-auto w-[240px] h-[240px] object-cover pointer-events-none"
             />
           )}
         </section>
@@ -319,78 +319,60 @@ export default function ThreeScene() {
         <section
           ref={weatherData48hScroll}
           onScroll={handleScroll}
-          className="relative z-10 overflow-y-scroll h-full px-6 py-10"
+          className="relative z-10 overflow-y-scroll no-scrollbar h-full px-6 pt-[200px] text-white"
         >
-          <div>
-            <h1 className="text-white text-3xl">{city}</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              lobortis felis velit, id mollis quam venenatis vitae. Maecenas
-              vitae mauris fermentum, commodo purus id, viverra mauris.
-              Phasellus viverra elit sed neque suscipit, at venenatis nulla
-              ultrices. Maecenas libero justo, cursus non accumsan et, ultricies
-              quis ex. Pellentesque tristique urna sit amet erat egestas auctor.
-              Nullam gravida elementum libero id ultrices. Nunc sit amet metus
-              ornare, elementum augue ut, dignissim justo. Nam a commodo urna.
-              Suspendisse dictum auctor justo, at venenatis turpis. Vestibulum
-              aliquet, lectus non porta eleifend, massa nulla condimentum nunc,
-              et faucibus tortor libero in turpis. Nam sem leo, tristique in
-              volutpat eu, venenatis id ligula. Aliquam fringilla neque lectus,
-              non accumsan augue condimentum ut. Curabitur feugiat tortor sit
-              amet lacus blandit volutpat. Donec sapien sapien, pretium ac eros
-              in, pharetra aliquam augue. Donec vulputate leo sed quam interdum,
-              sed pellentesque lectus rutrum.
-            </p>
-          </div>
-          <div>
-            <h1>DUMMY CONTENTS</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              lobortis felis velit, id mollis quam venenatis vitae. Maecenas
-              vitae mauris fermentum, commodo purus id, viverra mauris.
-              Phasellus viverra elit sed neque suscipit, at venenatis nulla
-              ultrices. Maecenas libero justo, cursus non accumsan et, ultricies
-              quis ex. Pellentesque tristique urna sit amet erat egestas auctor.
-              Nullam gravida elementum libero id ultrices. Nunc sit amet metus
-              ornare, elementum augue ut, dignissim justo. Nam a commodo urna.
-              Suspendisse dictum auctor justo, at venenatis turpis. Vestibulum
-              aliquet, lectus non porta eleifend, massa nulla condimentum nunc,
-              et faucibus tortor libero in turpis. Nam sem leo, tristique in
-              volutpat eu, venenatis id ligula. Aliquam fringilla neque lectus,
-              non accumsan augue condimentum ut. Curabitur feugiat tortor sit
-              amet lacus blandit volutpat. Donec sapien sapien, pretium ac eros
-              in, pharetra aliquam augue. Donec vulputate leo sed quam interdum,
-              sed pellentesque lectus rutrum.
-            </p>
-          </div>
-          <div>
-            <h1>DUMMY CONTENTS</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              lobortis felis velit, id mollis quam venenatis vitae. Maecenas
-              vitae mauris fermentum, commodo purus id, viverra mauris.
-              Phasellus viverra elit sed neque suscipit, at venenatis nulla
-              ultrices. Maecenas libero justo, cursus non accumsan et, ultricies
-              quis ex. Pellentesque tristique urna sit amet erat egestas auctor.
-              Nullam gravida elementum libero id ultrices. Nunc sit amet metus
-              ornare, elementum augue ut, dignissim justo. Nam a commodo urna.
-              Suspendisse dictum auctor justo, at venenatis turpis. Vestibulum
-              aliquet, lectus non porta eleifend, massa nulla condimentum nunc,
-              et faucibus tortor libero in turpis. Nam sem leo, tristique in
-              volutpat eu, venenatis id ligula. Aliquam fringilla neque lectus,
-              non accumsan augue condimentum ut. Curabitur feugiat tortor sit
-              amet lacus blandit volutpat. Donec sapien sapien, pretium ac eros
-              in, pharetra aliquam augue. Donec vulputate leo sed quam interdum,
-              sed pellentesque lectus rutrum.
-            </p>
-          </div>
+          {weather && (
+            <>
+              <div className="mb-[45px] flex flex-col items-center ">
+                <h1 className="font-dm-sans-semi-bold text-[72px]/[1.15]">
+                  {weather.current.temp.toFixed(1)}°C
+                </h1>
+                <p className="font-dm-sans-bold text-[20px]">
+                  {city.charAt(0).toUpperCase() +
+                    city.slice(1).toLocaleLowerCase()}
+                </p>
+              </div>
 
-          <button
-            className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
-            onClick={dataModalCloseHandler}
-          >
-            Go Back
-          </button>
+              <div className="mb-[32px] flex flex-col items-center font-mono text-[14px]">
+                <p>Feels like: {weather.current.feels_like}°C</p>
+                <p>High: {weather.daily[0].temp.max}°C</p>
+                <p>Low: {weather.daily[0].temp.min}°C</p>
+                <p>
+                  Sunrise:{" "}
+                  {new Date(weather.daily[0].sunrise * 1000)
+                    .getHours()
+                    .toString()}
+                  :
+                  {new Date(weather.daily[0].sunrise * 1000)
+                    .getMinutes()
+                    .toString()}
+                </p>
+                <p>
+                  Sunset:{" "}
+                  {new Date(weather.daily[0].sunset * 1000)
+                    .getHours()
+                    .toString()}
+                  :
+                  {new Date(weather.daily[0].sunset * 1000)
+                    .getMinutes()
+                    .toString()}
+                </p>
+              </div>
+
+              <div className="mb-7 w-full h-[120px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25"></div>
+
+              <div className="w-full h-[250px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25"></div>
+            </>
+          )}
+
+          <div className="mt-[48px] mb-[24px] flex flex-col items-center font-sans">
+            <button
+              className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
+              onClick={dataModalCloseHandler}
+            >
+              Go Back
+            </button>
+          </div>
         </section>
       </Modal>
 
