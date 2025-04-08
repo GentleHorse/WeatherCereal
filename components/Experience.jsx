@@ -17,7 +17,9 @@ export default function Experience({
 }) {
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
+      {/* <axesHelper visible={true} /> */}
+
       <OrbitControls
         makeDefault
         enableZoom={false}
@@ -26,7 +28,6 @@ export default function Experience({
         minPolarAngle={Math.PI * 0.1}
         maxPolarAngle={Math.PI * 0.35}
       />
-      {/* <axesHelper visible={true} /> */}
 
       <CustomEnvironment backgroundColor={true} />
 

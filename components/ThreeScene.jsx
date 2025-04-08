@@ -5,7 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { APP_STATE, useStore } from "@/stores/store.js";
 import Experience from "./Experience.jsx";
 import Modal from "./modal/Modal.jsx";
-import LoadingScene from "./loadingScene/LoadingScene.jsx";
+import LoadingScene3D from "./loadingScene/LoadingScene3D.jsx";
 import AudioConsentScreen from "./weatherAudio/AudioConsentScreen.jsx";
 
 export default function ThreeScene() {
@@ -13,14 +13,17 @@ export default function ThreeScene() {
     useStore((state) => state);
   const userInputCityName = useRef();
 
-  const [open, setOpen] = useState(false);
+  const [cityModalOpen, setCityModalOpen] = useState(false);
+  const [dataModalOpen, setDataModalOpen] = useState(false);
   const [city, setCity] = useState("");
   const [isFetching, setIsFetching] = useState();
   const [error, setError] = useState();
   const [weather, setWeather] = useState(null);
   const [showDataRelatedModels, setShowDataRelatedModels] = useState(true);
 
-  // Intial render only - set data based on user's geo location
+  /**
+   * SET DATA BASED ON GEO LOCATION - INITIAL RENDER ONLY
+   */
   useEffect(() => {
     const getLocationAndFetchWeather = async () => {
       if (!weather && typeof window !== "undefined") {
@@ -61,13 +64,15 @@ export default function ThreeScene() {
     getLocationAndFetchWeather();
   }, []);
 
-  // Modal
+  /**
+   * MODAL - CITY
+   */
   useEffect(() => {
-    if (appState === APP_STATE.CITY) setOpen(true);
+    if (appState === APP_STATE.CITY) setCityModalOpen(true);
   }, [appState]);
 
-  function modalCloseHandler() {
-    setOpen(false);
+  function cityModalCloseHandler() {
+    setCityModalOpen(false);
     userInputCityName.current.value = "";
     setError("");
     setShowDataRelatedModels(true);
@@ -87,7 +92,7 @@ export default function ThreeScene() {
       if (response.ok) {
         setWeather(data);
         setCity(userInputCityName.current.value);
-        modalCloseHandler();
+        cityModalCloseHandler();
       } else {
         setError({ message: data.message || "Error fetching weather data" });
       }
@@ -96,6 +101,18 @@ export default function ThreeScene() {
     }
 
     setIsFetching(false);
+  }
+
+  /**
+   * MODAL - CITY
+   */
+  useEffect(() => {
+    if (appState === APP_STATE.DATA_48H) setDataModalOpen(true);
+  }, [appState]);
+
+  function dataModalCloseHandler() {
+    setDataModalOpen(false);
+    changeAppState(APP_STATE.PLAY);
   }
 
   console.log(appState);
@@ -108,7 +125,7 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
-        <Suspense fallback={<LoadingScene />}>
+        <Suspense fallback={<LoadingScene3D />}>
           {weather && (
             <Experience
               weatherData={weather}
@@ -122,9 +139,9 @@ export default function ThreeScene() {
       {appState === APP_STATE.PLAY && <AudioConsentScreen />}
 
       <Modal
-        open={open}
-        onClose={modalCloseHandler}
-        className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#C1C1C1]/45"
+        open={cityModalOpen}
+        onClose={cityModalCloseHandler}
+        className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
         <section className="h-full flex flex-col items-center justify-center gap-4">
           <h1 className="font-extrabold text-4xl text-slate-900">
@@ -175,7 +192,7 @@ export default function ThreeScene() {
 
             <button
               className="focus:outline-none hover:cursor-pointer p-3 text-slate-700 rounded-2xl"
-              onClick={modalCloseHandler}
+              onClick={cityModalCloseHandler}
               disabled={isFetching ? true : false}
             >
               Go Back
@@ -184,69 +201,106 @@ export default function ThreeScene() {
         </section>
       </Modal>
 
+      <Modal
+        open={dataModalOpen}
+        onClose={dataModalCloseHandler}
+        className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+      >
+        <section className="h-full flex flex-col items-center justify-center gap-4">
+          <h1 className="font-extrabold text-4xl text-slate-900">Data modal</h1>
+
+          <button
+            className="focus:outline-none hover:cursor-pointer p-3 text-slate-700 rounded-2xl"
+            onClick={dataModalCloseHandler}
+            disabled={isFetching ? true : false}
+          >
+            Go Back
+          </button>
+        </section>
+      </Modal>
+
       {appState === APP_STATE.PLAY && (
         <>
-          <section className="absolute bottom-4 left-8">
-            <div>
-              <h1>9.1 °C</h1>
-              <p>Amsterdam</p>
-            </div>
-            <div>
-              <p>Feels like: 3.0°C</p>
-              <p>High: 14.5°C</p>
-              <p>Low: 1.6°C</p>
-              <p>Sunrise: 6:59</p>
-              <p>Sunset: 20:21</p>
-            </div>
-          </section>
+          {weather && (
+            <section className="absolute bottom-4 left-8">
+              <div>
+                <h1>{weather.current.temp}°C</h1>
+                <p>
+                  {city.charAt(0).toUpperCase() +
+                    city.slice(1).toLocaleLowerCase()}
+                </p>
+              </div>
+              <div>
+                <p>Feels like: {weather.current.feels_like}°C</p>
+                <p>High: {weather.daily[0].temp.max}°C</p>
+                <p>Low: {weather.daily[0].temp.min}°C</p>
+                <p>
+                  Sunrise:{" "}
+                  {new Date(weather.daily[0].sunrise * 1000)
+                    .getHours()
+                    .toString()}
+                  :
+                  {new Date(weather.daily[0].sunrise * 1000)
+                    .getMinutes()
+                    .toString()}
+                </p>
+                <p>
+                  Sunset:{" "}
+                  {new Date(weather.daily[0].sunset * 1000)
+                    .getHours()
+                    .toString()}
+                  :
+                  {new Date(weather.daily[0].sunset * 1000)
+                    .getMinutes()
+                    .toString()}
+                </p>
+              </div>
+            </section>
+          )}
 
-          <section className="absolute bottom-4 right-8">
+          <section className="absolute top-6 right-6">
             <button
-              className="focus:outline-none m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
-              onClick={() => {
-                changeAppState(APP_STATE.CITY);
-              }}
-            >
-              City
-            </button>
-            <button
-              className="focus:outline-none m-2 p-2 rounded-xl bg-amber-600 text-amber-200"
-              onClick={() => {
-                changeAppState(APP_STATE.DATA_48H);
-              }}
-            >
-              Data
-            </button>
-          </section>
-
-          <section className="absolute top-4 right-8">
-            <button
-              className="focus:outline-none m-2 p-2 rounded-xl"
+              className="focus:outline-none hover:cursor-pointer"
               onClick={() => {
                 if (audioEnabled) changeAudioEnabled(false);
                 if (!audioEnabled) changeAudioEnabled(true);
               }}
             >
               <img
-                src={`/images/audio-${audioEnabled ? "on" : "off"}.svg`}
+                src={`/images/play-state/audio-${
+                  audioEnabled ? "on" : "off"
+                }.svg`}
+                className="w-[50px] h-[50px] opacity-70"
+              />
+            </button>
+          </section>
+
+          <section className="absolute bottom-6 right-6 flex flex-col items-center justify-center">
+            <button
+              className="focus:outline-none hover:cursor-pointer"
+              onClick={() => {
+                changeAppState(APP_STATE.CITY);
+              }}
+            >
+              <img
+                src={`/images/play-state/cityscape.svg`}
+                className="w-[50px] h-[50px] opacity-70"
+              />
+            </button>
+            <button
+              className="focus:outline-none hover:cursor-pointer"
+              onClick={() => {
+                changeAppState(APP_STATE.DATA_48H);
+              }}
+            >
+              <img
+                src={`/images/play-state/weather.svg`}
                 className="w-[50px] h-[50px] opacity-70"
               />
             </button>
           </section>
         </>
       )}
-
-      {/* ------ FOR BEBUG ---------------  */}
-      <section className="absolute top-0">
-        <button
-          className="focus:outline-none m-2 p-2 rounded-xl bg-pink-900 text-pink-200"
-          onClick={() => {
-            changeAppState(APP_STATE.PLAY);
-          }}
-        >
-          Play
-        </button>
-      </section>
     </>
   );
 }
