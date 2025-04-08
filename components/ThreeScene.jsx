@@ -13,6 +13,7 @@ export default function ThreeScene() {
     useStore((state) => state);
   const userInputCityName = useRef();
   const weatherIconVideo = useRef();
+  const weatherData48hScroll = useRef();
 
   const [cityModalOpen, setCityModalOpen] = useState(false);
   const [dataModalOpen, setDataModalOpen] = useState(false);
@@ -108,10 +109,24 @@ export default function ThreeScene() {
    * MODAL - 48h weather data & precipitation
    */
   useEffect(() => {
-    if (appState === APP_STATE.DATA_48H) setDataModalOpen(true);
+    if (appState === APP_STATE.DATA_48H) {
+      setDataModalOpen(true);
+    }
   }, [appState]);
 
   function dataModalCloseHandler() {
+    // reset scroll
+    if (weatherData48hScroll.current) {
+      weatherData48hScroll.current.scrollTop = 0;
+    }
+
+    // reset video
+    const video = weatherIconVideo.current;
+    if (video && isFinite(video.duration)) {
+      video.currentTime = 0;
+      video.pause(); // optional: stop animation loop
+    }
+
     setDataModalOpen(false);
     changeAppState(APP_STATE.PLAY);
   }
@@ -125,27 +140,27 @@ export default function ThreeScene() {
       case "Clear":
         weatherCondition = "clear";
         break;
-  
+
       case "Clouds":
         weatherCondition = "clouds";
         break;
-  
+
       case "Rain":
         weatherCondition = "rain";
         break;
-  
+
       case "Drizzle":
         weatherCondition = "drizzle";
         break;
-  
+
       case "Thunderstorm":
         weatherCondition = "thunderstorm";
         break;
-  
+
       case "Snow":
         weatherCondition = "snow";
         break;
-  
+
       case "Mist":
       case "Smoke":
       case "Haze":
@@ -161,12 +176,31 @@ export default function ThreeScene() {
 
     // Safely update video source
     video.pause(); // optional, for smoothness
-    video.setAttribute('src', `/videos/${weatherCondition}.webm`);
+    video.setAttribute("src", `/videos/${weatherCondition}.webm`);
     video.load(); // important: tells browser to re-evaluate <source>
-    video.play().catch(err => {
-      console.warn('Autoplay blocked or error:', err);
-    });
   }, [weather]);
+
+  function handleScroll() {
+    const scrollContainer = weatherData48hScroll.current;
+    const video = weatherIconVideo.current;
+
+    if (!scrollContainer || !video) return;
+
+    const scrollTop = scrollContainer.scrollTop;
+    const maxScroll =
+      scrollContainer.scrollHeight - scrollContainer.clientHeight;
+
+    // normalize scroll between 0 and 1
+    const progress = Math.min(
+      1,
+      Math.max(0, scrollTop / (maxScroll || 1)) // avoid divide by zero
+    );
+
+    // sync to video duration
+    if (Number.isFinite(video.duration) && Number.isFinite(progress)) {
+      video.currentTime = progress * video.duration;
+    }
+  }
 
   return (
     <>
@@ -192,7 +226,7 @@ export default function ThreeScene() {
       <Modal
         open={cityModalOpen}
         onClose={cityModalCloseHandler}
-        className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+        className="relative m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
         <section className="h-full flex flex-col items-center justify-center gap-16">
           <div className="flex flex-col items-center">
@@ -267,27 +301,93 @@ export default function ThreeScene() {
       <Modal
         open={dataModalOpen}
         onClose={dataModalCloseHandler}
-        className="absolute overflow-auto no-scrollbar m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+        className="relative overflow-hidden no-scrollbar m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
-        <section className="h-full flex flex-col items-center justify-center gap-4">
+        <section className="absolute top-[16px] mx-auto">
           {weatherCondition !== null && (
             <video
               ref={weatherIconVideo}
-              autoPlay
+              autoPlay={false}
               muted
-              loop
+              loop={false}
               playsInline
               className="w-[240px] h-[240px] object-cover pointer-events-none"
             />
           )}
-
-          <h1 className="font-extrabold text-4xl text-slate-900">Data modal</h1>
         </section>
-        <section>
+
+        <section
+          ref={weatherData48hScroll}
+          onScroll={handleScroll}
+          className="relative z-10 overflow-y-scroll h-full px-6 py-10"
+        >
+          <div>
+            <h1>DUMMY CONTENTS</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              lobortis felis velit, id mollis quam venenatis vitae. Maecenas
+              vitae mauris fermentum, commodo purus id, viverra mauris.
+              Phasellus viverra elit sed neque suscipit, at venenatis nulla
+              ultrices. Maecenas libero justo, cursus non accumsan et, ultricies
+              quis ex. Pellentesque tristique urna sit amet erat egestas auctor.
+              Nullam gravida elementum libero id ultrices. Nunc sit amet metus
+              ornare, elementum augue ut, dignissim justo. Nam a commodo urna.
+              Suspendisse dictum auctor justo, at venenatis turpis. Vestibulum
+              aliquet, lectus non porta eleifend, massa nulla condimentum nunc,
+              et faucibus tortor libero in turpis. Nam sem leo, tristique in
+              volutpat eu, venenatis id ligula. Aliquam fringilla neque lectus,
+              non accumsan augue condimentum ut. Curabitur feugiat tortor sit
+              amet lacus blandit volutpat. Donec sapien sapien, pretium ac eros
+              in, pharetra aliquam augue. Donec vulputate leo sed quam interdum,
+              sed pellentesque lectus rutrum.
+            </p>
+          </div>
+          <div>
+            <h1>DUMMY CONTENTS</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              lobortis felis velit, id mollis quam venenatis vitae. Maecenas
+              vitae mauris fermentum, commodo purus id, viverra mauris.
+              Phasellus viverra elit sed neque suscipit, at venenatis nulla
+              ultrices. Maecenas libero justo, cursus non accumsan et, ultricies
+              quis ex. Pellentesque tristique urna sit amet erat egestas auctor.
+              Nullam gravida elementum libero id ultrices. Nunc sit amet metus
+              ornare, elementum augue ut, dignissim justo. Nam a commodo urna.
+              Suspendisse dictum auctor justo, at venenatis turpis. Vestibulum
+              aliquet, lectus non porta eleifend, massa nulla condimentum nunc,
+              et faucibus tortor libero in turpis. Nam sem leo, tristique in
+              volutpat eu, venenatis id ligula. Aliquam fringilla neque lectus,
+              non accumsan augue condimentum ut. Curabitur feugiat tortor sit
+              amet lacus blandit volutpat. Donec sapien sapien, pretium ac eros
+              in, pharetra aliquam augue. Donec vulputate leo sed quam interdum,
+              sed pellentesque lectus rutrum.
+            </p>
+          </div>
+          <div>
+            <h1>DUMMY CONTENTS</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              lobortis felis velit, id mollis quam venenatis vitae. Maecenas
+              vitae mauris fermentum, commodo purus id, viverra mauris.
+              Phasellus viverra elit sed neque suscipit, at venenatis nulla
+              ultrices. Maecenas libero justo, cursus non accumsan et, ultricies
+              quis ex. Pellentesque tristique urna sit amet erat egestas auctor.
+              Nullam gravida elementum libero id ultrices. Nunc sit amet metus
+              ornare, elementum augue ut, dignissim justo. Nam a commodo urna.
+              Suspendisse dictum auctor justo, at venenatis turpis. Vestibulum
+              aliquet, lectus non porta eleifend, massa nulla condimentum nunc,
+              et faucibus tortor libero in turpis. Nam sem leo, tristique in
+              volutpat eu, venenatis id ligula. Aliquam fringilla neque lectus,
+              non accumsan augue condimentum ut. Curabitur feugiat tortor sit
+              amet lacus blandit volutpat. Donec sapien sapien, pretium ac eros
+              in, pharetra aliquam augue. Donec vulputate leo sed quam interdum,
+              sed pellentesque lectus rutrum.
+            </p>
+          </div>
+
           <button
             className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
             onClick={dataModalCloseHandler}
-            disabled={isFetching ? true : false}
           >
             Go Back
           </button>
