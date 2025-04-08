@@ -221,13 +221,16 @@ export default function ThreeScene() {
 
           <section className="absolute top-4 right-8">
             <button
-              className="focus:outline-none m-2 p-2 rounded-xl bg-blue-700 text-amber-200"
+              className="focus:outline-none m-2 p-2 rounded-xl"
               onClick={() => {
                 if (audioEnabled) changeAudioEnabled(false);
                 if (!audioEnabled) changeAudioEnabled(true);
               }}
             >
-              {`Audio ${audioEnabled ? "OFF" : "On"}`}
+              <img
+                src={`/images/audio-${audioEnabled ? "on" : "off"}.svg`}
+                className="w-[50px] h-[50px] opacity-70"
+              />
             </button>
           </section>
         </>
