@@ -7,7 +7,7 @@ export default function AudioConsentScreen() {
 
   if (!hasInteracted) {
     return (
-      <div className="absolute m-auto px-10 py-[10vh] w-[90vw] h-[90vh] inset-0 flex flex-col items-center justify-center gap-10 rounded-2xl backdrop-blur-md bg-[#333333]/70 text-white z-50">
+      <div className="absolute m-auto px-10 py-[10vh] w-[90vw] h-[90vh] inset-0 flex flex-col items-center justify-center gap-10 rounded-2xl backdrop-blur-md bg-[#333333]/45 text-white z-50">
         <img
           src="/images/play-state/audio-on.svg"
           className="w-[95px] h-[95px] opacity-90"

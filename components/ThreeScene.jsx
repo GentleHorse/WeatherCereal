@@ -143,31 +143,41 @@ export default function ThreeScene() {
         onClose={cityModalCloseHandler}
         className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
-        <section className="h-full flex flex-col items-center justify-center gap-4">
-          <h1 className="font-extrabold text-4xl text-slate-900">
-            Weather Cereal
-          </h1>
-          <input
-            ref={userInputCityName}
-            className={`focus:outline-none px-2 py-4 w-4/5 text-center rounded-2xl ${
-              error ? "text-pink-600 bg-pink-300" : "text-blue-950 bg-blue-100"
-            }`}
-            type="text"
-            placeholder="City Name?"
-          />
-          {error && <p className="text-pink-600">{error.message}</p>}
-          <div className="flex flex-row">
+        <section className="h-full flex flex-col items-center justify-center gap-16">
+          <div className="flex flex-col items-center">
+            <img
+              src="/images/play-state/cityscape.svg"
+              className="w-[95px] h-[95px] opacity-70"
+            />
+            <h1 className="font-poppins-bold text-[40px] text-white">City</h1>
+          </div>
+
+          <div className="flex flex-col items-center w-full">
+            <input
+              ref={userInputCityName}
+              className={`focus:outline-none px-2 py-4 w-4/5 text-center rounded-2xl ${
+                error
+                  ? "text-pink-600 bg-pink-300"
+                  : "text-blue-950 bg-blue-100"
+              }`}
+              type="text"
+              placeholder="City Name?"
+            />
+            {error && <p className="mt-2 text-sm text-pink-600">{error.message}</p>}
+          </div>
+
+          <div className="flex flex-col items-center font-sans gap-3 text-[14px] text-white">
             {!isFetching ? (
               <button
-                className="focus:outline-none hover:cursor-pointer p-3 bg-orange-500 text-orange-50 rounded-2xl"
+                className="focus:outline-none hover:cursor-pointer px-6 py-4 bg-linear-to-r/hsl from-[#113285]/80 to-[#227D51]/80 shadow-lg rounded-2xl"
                 onClick={changeCity}
               >
-                Check Weather
+                Change City
               </button>
             ) : (
               <button
                 disabled
-                className="focus:outline-none hover:cursor-pointer p-3 bg-blue-800 text-blue-50 rounded-2xl"
+                className="focus:outline-none hover:cursor-pointer px-6 py-4 bg-blue-800 text-blue-50 rounded-2xl"
               >
                 <svg
                   aria-hidden="true"
@@ -191,7 +201,7 @@ export default function ThreeScene() {
             )}
 
             <button
-              className="focus:outline-none hover:cursor-pointer p-3 text-slate-700 rounded-2xl"
+              className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
               onClick={cityModalCloseHandler}
               disabled={isFetching ? true : false}
             >
@@ -288,7 +298,9 @@ export default function ThreeScene() {
                 src={`/images/play-state/cityscape.svg`}
                 className="w-[50px] h-[50px] opacity-70"
               />
-              <p className="absolute bottom-[-18px] right-[-12px] font-poppins-bold text-[20px] text-white">City</p>
+              <p className="absolute bottom-[-18px] right-[-12px] font-poppins-bold text-[20px] text-white">
+                City
+              </p>
             </button>
             <button
               className="relative focus:outline-none hover:cursor-pointer"
@@ -300,7 +312,9 @@ export default function ThreeScene() {
                 src={`/images/play-state/weather.svg`}
                 className="w-[50px] h-[50px] opacity-70"
               />
-              <p className="absolute bottom-[-10px] right-[-12px] font-poppins-bold text-[20px] text-white">48h</p>
+              <p className="absolute bottom-[-10px] right-[-12px] font-poppins-bold text-[20px] text-white">
+                48h
+              </p>
             </button>
           </section>
         </>

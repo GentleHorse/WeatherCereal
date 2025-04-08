@@ -8,7 +8,7 @@ export async function GET(req) {
 
   if (!city && (!lat || !lon)) {
     return Response.json(
-      { message: "City or coordinates required" },
+      { message: "City is required" },
       { status: 400 }
     );
   }
