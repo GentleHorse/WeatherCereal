@@ -146,7 +146,7 @@ export default function ThreeScene() {
         <section className="h-full flex flex-col items-center justify-center gap-16">
           <div className="flex flex-col items-center">
             <img
-              src="/images/play-state/cityscape.svg"
+              src="/images/city-state/cityscape.svg"
               className="w-[95px] h-[95px] opacity-70"
             />
             <h1 className="font-poppins-bold text-[40px] text-white">City</h1>
@@ -163,7 +163,9 @@ export default function ThreeScene() {
               type="text"
               placeholder="City Name?"
             />
-            {error && <p className="mt-2 text-sm text-pink-600">{error.message}</p>}
+            {error && (
+              <p className="mt-2 text-sm text-pink-600">{error.message}</p>
+            )}
           </div>
 
           <div className="flex flex-col items-center font-sans gap-3 text-[14px] text-white">
@@ -214,13 +216,14 @@ export default function ThreeScene() {
       <Modal
         open={dataModalOpen}
         onClose={dataModalCloseHandler}
-        className="absolute m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+        className="absolute overflow-auto no-scrollbar m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
         <section className="h-full flex flex-col items-center justify-center gap-4">
           <h1 className="font-extrabold text-4xl text-slate-900">Data modal</h1>
-
+        </section>
+        <section>
           <button
-            className="focus:outline-none hover:cursor-pointer p-3 text-slate-700 rounded-2xl"
+            className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
             onClick={dataModalCloseHandler}
             disabled={isFetching ? true : false}
           >
