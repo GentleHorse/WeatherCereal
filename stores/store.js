@@ -2,10 +2,9 @@ import { create } from "zustand";
 
 export const APP_STATE = {
   LOADING: "LOADING",
-  MENU: "MENU",
+  CITY: "CITY",
   PLAY: "PLAY",
-  TEMP: "TEMP",
-  PRECIPITATION: "PRECIPITATION",
+  DATA_48H: "DATA_48H",
 };
 
 export const useStore = create((set) => ({

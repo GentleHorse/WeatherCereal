@@ -15,11 +15,46 @@ export default function ThreeScene() {
   const [city, setCity] = useState("");
   const [isFetching, setIsFetching] = useState();
   const [error, setError] = useState();
-  const [weather, setWeather] = useState();
+  const [weather, setWeather] = useState(null);
   const [showDataRelatedModels, setShowDataRelatedModels] = useState(true);
 
   useEffect(() => {
-    if (appState === APP_STATE.MENU) setOpen(true);
+    const getLocationAndFetchWeather = async () => {
+      if (!weather && typeof window !== "undefined") {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+  
+            try {
+              // 🛰️ Send lat/lon to your server-side API (secure!)
+              const res = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`);
+              const data = await res.json();
+  
+              if (res.ok) {
+                setWeather(data);
+                setCity(data.city || ""); // Optional: your API could return the city name too
+                changeAppState(APP_STATE.PLAY);
+              } else {
+                throw new Error(data.message || "Failed to fetch weather");
+              }
+            } catch (err) {
+              console.warn("Weather fetch failed. Ask user for city name:", err);
+              changeAppState(APP_STATE.CITY); // fallback to city modal
+            }
+          },
+          (error) => {
+            console.warn("Geolocation denied. Ask user for city name:", error);
+            changeAppState(APP_STATE.CITY); // fallback to city modal
+          }
+        );
+      }
+    };
+  
+    getLocationAndFetchWeather();
+  }, []);
+
+  useEffect(() => {
+    if (appState === APP_STATE.CITY) setOpen(true);
   }, [appState]);
 
   function modalCloseHandler() {
@@ -64,12 +99,14 @@ export default function ThreeScene() {
         gl={{ antialias: false }}
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
-        <Suspense fallback={<Loading />}>
-          <Experience
-            weatherData={weather}
-            city={city.toUpperCase()}
-            showDataRelatedModels={showDataRelatedModels}
-          />
+        <Suspense fallback={<LoadingScene />}>
+          {weather && (
+            <Experience
+              weatherData={weather}
+              city={city.toUpperCase()}
+              showDataRelatedModels={showDataRelatedModels}
+            />
+          )}
         </Suspense>
       </Canvas>
 
@@ -136,16 +173,45 @@ export default function ThreeScene() {
         </section>
       </Modal>
 
+      {appState === APP_STATE.PLAY && (
+        <>
+          <section className="absolute bottom-4 left-8">
+            <div>
+              <h1>9.1 °C</h1>
+              <p>Amsterdam</p>
+            </div>
+            <div>
+              <p>Feels like: 3.0°C</p>
+              <p>High: 14.5°C</p>
+              <p>Low: 1.6°C</p>
+              <p>Sunrise: 6:59</p>
+              <p>Sunset: 20:21</p>
+            </div>
+          </section>
+
+          <section className="absolute bottom-4 right-8">
+            <button
+              className="focus:outline-none m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
+              onClick={() => {
+                changeAppState(APP_STATE.CITY);
+              }}
+            >
+              City
+            </button>
+            <button
+              className="focus:outline-none m-2 p-2 rounded-xl bg-amber-600 text-amber-200"
+              onClick={() => {
+                changeAppState(APP_STATE.DATA_48H);
+              }}
+            >
+              Data
+            </button>
+          </section>
+        </>
+      )}
+
       {/* ------ FOR BEBUG ---------------  */}
       <section className="absolute top-0">
-        <button
-          className="focus:outline-none m-2 p-2 rounded-xl bg-emerald-800 text-emerald-200"
-          onClick={() => {
-            changeAppState(APP_STATE.MENU);
-          }}
-        >
-          Menu
-        </button>
         <button
           className="focus:outline-none m-2 p-2 rounded-xl bg-pink-900 text-pink-200"
           onClick={() => {
@@ -153,22 +219,6 @@ export default function ThreeScene() {
           }}
         >
           Play
-        </button>
-        <button
-          className="focus:outline-none m-2 p-2 rounded-xl bg-amber-600 text-amber-200"
-          onClick={() => {
-            changeAppState(APP_STATE.TEMP);
-          }}
-        >
-          Temp
-        </button>
-        <button
-          className="focus:outline-none m-2 p-2 rounded-xl bg-blue-950 text-blue-200"
-          onClick={() => {
-            changeAppState(APP_STATE.PRECIPITATION);
-          }}
-        >
-          Precipitation
         </button>
       </section>
     </>
@@ -182,7 +232,7 @@ function Loading() {
     return () => {
       // First loaded time only
       if (appState === APP_STATE.LOADING) {
-        changeAppState(APP_STATE.MENU);
+        changeAppState(APP_STATE.CITY);
       }
     };
   }, []);
