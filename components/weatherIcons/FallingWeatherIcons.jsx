@@ -15,7 +15,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
    * SET WEATHER CONDITION
    */
   let weatherCondition;
-  switch (data.weather[0].main) {
+  switch (data.current.weather[0].main) {
     case "Clear":
       weatherCondition = "clear";
       break;

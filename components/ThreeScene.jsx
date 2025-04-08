@@ -322,7 +322,7 @@ export default function ThreeScene() {
           className="relative z-10 overflow-y-scroll h-full px-6 py-10"
         >
           <div>
-            <h1>DUMMY CONTENTS</h1>
+            <h1 className="text-white text-3xl">{city}</h1>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
               lobortis felis velit, id mollis quam venenatis vitae. Maecenas

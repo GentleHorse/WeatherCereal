@@ -43,7 +43,7 @@ export default function Experience({
         <Stage scale={0.75} position-y={-0.5} />
 
         {weatherData && showDataRelatedModels && (
-          <FallingWeatherIcons data={weatherData.hourly[0]} />
+          <FallingWeatherIcons data={weatherData} />
         )}
       </Physics>
 
