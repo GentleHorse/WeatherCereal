@@ -10,6 +10,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-red-hat-mono);
+  --font-dm-sans-semi-bold: var(--font-dm-sans-semi-bold);
+  --font-dm-sans-bold: var(--font-dm-sans-bold);
+  --font-poppins-bold: var(--font-poppins-bold);
 }
 
 @media (prefers-color-scheme: dark) {

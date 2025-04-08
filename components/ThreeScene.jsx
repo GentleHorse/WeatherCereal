@@ -222,38 +222,40 @@ export default function ThreeScene() {
       {appState === APP_STATE.PLAY && (
         <>
           {weather && (
-            <section className="absolute bottom-4 left-8">
-              <div>
-                <h1>{weather.current.temp}°C</h1>
-                <p>
+            <section className="absolute bottom-[28px] left-[32px] text-white">
+              <h1 className="font-dm-sans-semi-bold text-[96px]/[0.9]">
+                {weather.current.temp.toFixed(1)}°C
+              </h1>
+              <div className="ml-2">
+                <p className="mb-[20px] font-dm-sans-bold text-[32px]">
                   {city.charAt(0).toUpperCase() +
                     city.slice(1).toLocaleLowerCase()}
                 </p>
-              </div>
-              <div>
-                <p>Feels like: {weather.current.feels_like}°C</p>
-                <p>High: {weather.daily[0].temp.max}°C</p>
-                <p>Low: {weather.daily[0].temp.min}°C</p>
-                <p>
-                  Sunrise:{" "}
-                  {new Date(weather.daily[0].sunrise * 1000)
-                    .getHours()
-                    .toString()}
-                  :
-                  {new Date(weather.daily[0].sunrise * 1000)
-                    .getMinutes()
-                    .toString()}
-                </p>
-                <p>
-                  Sunset:{" "}
-                  {new Date(weather.daily[0].sunset * 1000)
-                    .getHours()
-                    .toString()}
-                  :
-                  {new Date(weather.daily[0].sunset * 1000)
-                    .getMinutes()
-                    .toString()}
-                </p>
+                <div className="font-mono text-[14px]">
+                  <p>Feels like: {weather.current.feels_like}°C</p>
+                  <p>High: {weather.daily[0].temp.max}°C</p>
+                  <p>Low: {weather.daily[0].temp.min}°C</p>
+                  <p>
+                    Sunrise:{" "}
+                    {new Date(weather.daily[0].sunrise * 1000)
+                      .getHours()
+                      .toString()}
+                    :
+                    {new Date(weather.daily[0].sunrise * 1000)
+                      .getMinutes()
+                      .toString()}
+                  </p>
+                  <p>
+                    Sunset:{" "}
+                    {new Date(weather.daily[0].sunset * 1000)
+                      .getHours()
+                      .toString()}
+                    :
+                    {new Date(weather.daily[0].sunset * 1000)
+                      .getMinutes()
+                      .toString()}
+                  </p>
+                </div>
               </div>
             </section>
           )}
@@ -275,9 +277,9 @@ export default function ThreeScene() {
             </button>
           </section>
 
-          <section className="absolute bottom-6 right-6 flex flex-col items-center justify-center">
+          <section className="absolute bottom-[38px] right-[48px] flex flex-col items-center justify-center gap-[30px]">
             <button
-              className="focus:outline-none hover:cursor-pointer"
+              className="relative focus:outline-none hover:cursor-pointer"
               onClick={() => {
                 changeAppState(APP_STATE.CITY);
               }}
@@ -286,9 +288,10 @@ export default function ThreeScene() {
                 src={`/images/play-state/cityscape.svg`}
                 className="w-[50px] h-[50px] opacity-70"
               />
+              <p className="absolute bottom-[-18px] right-[-12px] font-poppins-bold text-[20px] text-white">City</p>
             </button>
             <button
-              className="focus:outline-none hover:cursor-pointer"
+              className="relative focus:outline-none hover:cursor-pointer"
               onClick={() => {
                 changeAppState(APP_STATE.DATA_48H);
               }}
@@ -297,6 +300,7 @@ export default function ThreeScene() {
                 src={`/images/play-state/weather.svg`}
                 className="w-[50px] h-[50px] opacity-70"
               />
+              <p className="absolute bottom-[-10px] right-[-12px] font-poppins-bold text-[20px] text-white">48h</p>
             </button>
           </section>
         </>
