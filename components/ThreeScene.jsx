@@ -9,7 +9,8 @@ import LoadingScene from "./loadingScene/LoadingScene.jsx";
 import AudioConsentScreen from "./weatherAudio/AudioConsentScreen.jsx";
 
 export default function ThreeScene() {
-  const { appState, changeAppState } = useStore((state) => state);
+  const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
+    useStore((state) => state);
   const userInputCityName = useRef();
 
   const [open, setOpen] = useState(false);
@@ -215,6 +216,18 @@ export default function ThreeScene() {
               }}
             >
               Data
+            </button>
+          </section>
+
+          <section className="absolute top-4 right-8">
+            <button
+              className="focus:outline-none m-2 p-2 rounded-xl bg-blue-700 text-amber-200"
+              onClick={() => {
+                if (audioEnabled) changeAudioEnabled(false);
+                if (!audioEnabled) changeAudioEnabled(true);
+              }}
+            >
+              {`Audio ${audioEnabled ? "OFF" : "On"}`}
             </button>
           </section>
         </>
