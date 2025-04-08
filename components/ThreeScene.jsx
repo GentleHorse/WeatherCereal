@@ -12,6 +12,7 @@ export default function ThreeScene() {
   const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
     useStore((state) => state);
   const userInputCityName = useRef();
+  const weatherIconVideo = useRef();
 
   const [cityModalOpen, setCityModalOpen] = useState(false);
   const [dataModalOpen, setDataModalOpen] = useState(false);
@@ -104,7 +105,7 @@ export default function ThreeScene() {
   }
 
   /**
-   * MODAL - CITY
+   * MODAL - 48h weather data & precipitation
    */
   useEffect(() => {
     if (appState === APP_STATE.DATA_48H) setDataModalOpen(true);
@@ -115,7 +116,57 @@ export default function ThreeScene() {
     changeAppState(APP_STATE.PLAY);
   }
 
-  console.log(appState);
+  let weatherCondition;
+  useEffect(() => {
+    const video = weatherIconVideo.current;
+    if (!video) return;
+
+    switch (weather.current?.weather[0].main) {
+      case "Clear":
+        weatherCondition = "clear";
+        break;
+  
+      case "Clouds":
+        weatherCondition = "clouds";
+        break;
+  
+      case "Rain":
+        weatherCondition = "rain";
+        break;
+  
+      case "Drizzle":
+        weatherCondition = "drizzle";
+        break;
+  
+      case "Thunderstorm":
+        weatherCondition = "thunderstorm";
+        break;
+  
+      case "Snow":
+        weatherCondition = "snow";
+        break;
+  
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+      case "Tornado":
+        weatherCondition = "mist";
+        break;
+    }
+
+    // Safely update video source
+    video.pause(); // optional, for smoothness
+    video.setAttribute('src', `/videos/${weatherCondition}.webm`);
+    video.load(); // important: tells browser to re-evaluate <source>
+    video.play().catch(err => {
+      console.warn('Autoplay blocked or error:', err);
+    });
+  }, [weather]);
 
   return (
     <>
@@ -219,6 +270,17 @@ export default function ThreeScene() {
         className="absolute overflow-auto no-scrollbar m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
         <section className="h-full flex flex-col items-center justify-center gap-4">
+          {weatherCondition !== null && (
+            <video
+              ref={weatherIconVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-[240px] h-[240px] object-cover pointer-events-none"
+            />
+          )}
+
           <h1 className="font-extrabold text-4xl text-slate-900">Data modal</h1>
         </section>
         <section>
