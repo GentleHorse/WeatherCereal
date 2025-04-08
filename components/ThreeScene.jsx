@@ -26,7 +26,7 @@ export default function ThreeScene() {
             const { latitude, longitude } = position.coords;
   
             try {
-              // 🛰️ Send lat/lon to your server-side API (secure!)
+              // Send lat/lon to your server-side API (secure!)
               const res = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`);
               const data = await res.json();
   

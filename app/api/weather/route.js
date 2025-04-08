@@ -14,8 +14,8 @@ export async function GET(req) {
   }
 
   try {
-    let resolvedLat = lat;
-    let resolvedLon = lon;
+    let latitude = lat;
+    let longitude = lon;
     let cityName = city;
 
     // If city is not provided, reverse geocode lat/lon on the server
@@ -27,19 +27,38 @@ export async function GET(req) {
 
       if (!geoData.length) {
         return Response.json(
-          { message: "Unable to detect city name" },
+          { message: "City not found" },
           { status: 404 }
         );
       }
 
       cityName = geoData[0].name;
-      resolvedLat = geoData[0].lat;
-      resolvedLon = geoData[0].lon;
+      latitude = geoData[0].lat;
+      longitude = geoData[0].lon;
+    }
+
+    // If city is provided
+    if (city && !lat && !lon) {
+      const geoRes = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+      );
+      const geoData = await geoRes.json();
+
+      if (!geoRes.ok || !geoData[0]?.lat || !geoData[0]?.lon) {
+        return new Response(
+          JSON.stringify({ message: "Invalid city name or location not found" }),
+          { status: 404 }
+        );
+      }
+
+      cityName = city;
+      latitude = geoData[0].lat;
+      longitude = geoData[0].lon;
     }
 
     // Fetch weather
     const weatherRes = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${resolvedLat}&lon=${resolvedLon}&appid=${apiKey}&units=metric`
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
     );
     const weatherData = await weatherRes.json();
 
