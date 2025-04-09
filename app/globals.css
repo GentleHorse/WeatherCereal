@@ -40,6 +40,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 /* - - - L O A D E R - - - */
 
 .loader {

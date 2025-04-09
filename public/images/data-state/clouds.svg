@@ -3,8 +3,8 @@
 <svg version="1.1" id="icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#FFC408;}
+	.st0{fill:#E7E7E7;}
 </style>
-<polygon class="st0" points="50,-0.2 12.5,49.8 25,49.8 12.5,100.2 50,49.8 37.5,49.8 "/>
-<polygon class="st0" points="75,99.8 50,74.8 62.5,74.8 50,37.3 87.5,74.8 75,74.8 "/>
+<path class="st0" d="M100,62.5c0,13.8-11.2,25-25,25H25c-13.8,0-25-11.2-25-25C0,53.2,5.1,45,12.7,40.7c-0.1-1.1-0.2-2.1-0.2-3.2
+	c0-13.8,11.2-25,25-25c9.4,0,17.6,5.2,21.9,12.9c1-0.2,2-0.4,3.1-0.4C69.4,25,75,30.6,75,37.5C88.8,37.5,100,48.7,100,62.5z"/>
 </svg>

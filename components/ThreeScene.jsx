@@ -8,7 +8,10 @@ import Modal from "./modal/Modal.jsx";
 import LoadingScene3D from "./loadingScene/LoadingScene3D.jsx";
 import AudioConsentScreen from "./weatherAudio/AudioConsentScreen.jsx";
 import weatherConditionConverter from "@/utils/weatherConditionConverter.js";
-import localTimeFormatter from "@/utils/localTimeFormatter.js";
+import {
+  localTimeFormatter,
+  localTimeFormatterHourOnly,
+} from "@/utils/localTimeFormatter.js";
 
 export default function ThreeScene() {
   const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
@@ -16,6 +19,8 @@ export default function ThreeScene() {
   const userInputCityName = useRef();
   const weatherIconVideo = useRef();
   const weatherData48hScroll = useRef();
+  const weatherData48hWeatherHorizontalScroll = useRef();
+  const weatherData48hPrecipitationHorizontalScroll = useRef();
 
   const [cityModalOpen, setCityModalOpen] = useState(false);
   const [dataModalOpen, setDataModalOpen] = useState(false);
@@ -78,7 +83,7 @@ export default function ThreeScene() {
 
   const timeFormatterHourOnly = useMemo(() => {
     if (!weather) return null;
-    return localTimeFormatter(weather, "numeric", undefined);
+    return localTimeFormatterHourOnly(weather);
   }, [weather]);
 
   /**
@@ -134,6 +139,12 @@ export default function ThreeScene() {
     if (weatherData48hScroll.current) {
       weatherData48hScroll.current.scrollTop = 0;
     }
+    if (weatherData48hWeatherHorizontalScroll.current) {
+      weatherData48hWeatherHorizontalScroll.current.scrollLeft = 0;
+    }
+    if (weatherData48hPrecipitationHorizontalScroll.current) {
+      weatherData48hPrecipitationHorizontalScroll.current.scrollLeft = 0;
+    }
 
     // reset video
     const video = weatherIconVideo.current;
@@ -182,6 +193,58 @@ export default function ThreeScene() {
       video.currentTime = progress * video.duration;
     }
   }
+
+  /**
+   * HORIZONTAL SCROLL - DRAGABLE WITH ALSO MOUSE
+   */
+  useEffect(() => {
+    const elements = document.querySelectorAll(".horizontal-scroll");
+    if (!elements.length) return;
+
+    const handlers = [];
+
+    elements.forEach((el) => {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      const startDragging = (e) => {
+        isDown = true;
+        el.classList.add("cursor-grabbing", "no-select");
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      };
+
+      const stopDragging = () => {
+        isDown = false;
+        el.classList.remove("cursor-grabbing", "no-select");
+      };
+
+      const drag = (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        el.scrollLeft = scrollLeft - walk;
+      };
+
+      el.addEventListener("mousedown", startDragging);
+      el.addEventListener("mouseleave", stopDragging);
+      el.addEventListener("mouseup", stopDragging);
+      el.addEventListener("mousemove", drag);
+
+      handlers.push({ el, startDragging, stopDragging, drag });
+    });
+
+    return () => {
+      handlers.forEach(({ el, startDragging, stopDragging, drag }) => {
+        el.removeEventListener("mousedown", startDragging);
+        el.removeEventListener("mouseleave", stopDragging);
+        el.removeEventListener("mouseup", stopDragging);
+        el.removeEventListener("mousemove", drag);
+      });
+    };
+  }, [appState]);
 
   return (
     <>
@@ -332,15 +395,37 @@ export default function ThreeScene() {
                 </p>
               </div>
 
-              <div className="mb-7 w-full h-[120px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25">
-                <div>
-                  <div>
-                    <p>9pm</p>
-                  </div>
-                </div>
+              <div
+                ref={weatherData48hWeatherHorizontalScroll}
+                className="horizontal-scroll overflow-x-scroll no-scrollbar mb-7 px-5 py-4 w-full h-[120px] flex flex-row gap-7 rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25 font-sans text-[12px] text-white/70"
+              >
+                {weather.hourly.map((data, index) => {
+                  const weatherConditionName = weatherConditionConverter(
+                    data.weather[0].main
+                  );
+
+                  return (
+                    <div
+                      key={index}
+                      className="h-full flex flex-col items-center justify-evenly"
+                    >
+                      <p className="w-10 text-center">
+                        {timeFormatterHourOnly.format(new Date(data.dt * 1000))}
+                      </p>
+                      <img
+                        src={`/images/data-state/${weatherConditionName}.svg`}
+                        className="w-8 h-8"
+                      />
+                      <p>{data.temp.toFixed(1)}°C</p>
+                    </div>
+                  );
+                })}
               </div>
 
-              <div className="w-full h-[250px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25"></div>
+              <div
+                ref={weatherData48hPrecipitationHorizontalScroll}
+                className="horizontal-scroll overflow-x-scroll no-scrollbar mb-7 px-5 py-4 w-full h-[250px] flex-row gap-7 rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25 font-sans text-[12px] text-white/70"
+              ></div>
             </>
           )}
 
