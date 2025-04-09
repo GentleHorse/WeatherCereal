@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, Suspense } from "react";
+import { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { APP_STATE, useStore } from "@/stores/store.js";
 import Experience from "./Experience.jsx";
@@ -8,6 +8,7 @@ import Modal from "./modal/Modal.jsx";
 import LoadingScene3D from "./loadingScene/LoadingScene3D.jsx";
 import AudioConsentScreen from "./weatherAudio/AudioConsentScreen.jsx";
 import weatherConditionConverter from "@/utils/weatherConditionConverter.js";
+import localTimeFormatter from "@/utils/localTimeFormatter.js";
 
 export default function ThreeScene() {
   const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
@@ -66,6 +67,19 @@ export default function ThreeScene() {
 
     getLocationAndFetchWeather();
   }, []);
+
+  /**
+   * TIME FORMATTERS
+   */
+  const timeFormatter = useMemo(() => {
+    if (!weather) return null;
+    return localTimeFormatter(weather, "numeric", "2-digit", false);
+  }, [weather]);
+
+  const timeFormatterHourOnly = useMemo(() => {
+    if (!weather) return null;
+    return localTimeFormatter(weather, "numeric", undefined);
+  }, [weather]);
 
   /**
    * MODAL - CITY
@@ -137,7 +151,9 @@ export default function ThreeScene() {
     const video = weatherIconVideo.current;
     if (!video) return;
 
-    weatherCondition = weatherConditionConverter(weather.current?.weather[0].main);
+    weatherCondition = weatherConditionConverter(
+      weather.current?.weather[0].main
+    );
 
     // Safely update video source
     video.pause(); // optional, for smoothness
@@ -286,7 +302,7 @@ export default function ThreeScene() {
           onScroll={handleScroll}
           className="relative z-10 overflow-y-scroll no-scrollbar h-full px-6 pt-[200px] text-white"
         >
-          {weather && (
+          {weather && timeFormatter && (
             <>
               <div className="mb-[45px] flex flex-col items-center ">
                 <h1 className="font-dm-sans-semi-bold text-[72px]/[1.15]">
@@ -299,32 +315,30 @@ export default function ThreeScene() {
               </div>
 
               <div className="mb-[32px] flex flex-col items-center font-mono text-[14px]">
-                <p>Feels like: {weather.current.feels_like}°C</p>
-                <p>High: {weather.daily[0].temp.max}°C</p>
-                <p>Low: {weather.daily[0].temp.min}°C</p>
+                <p>Feels like: {weather.current.feels_like.toFixed(1)}°C</p>
+                <p>High: {weather.daily[0].temp.max.toFixed(1)}°C</p>
+                <p>Low: {weather.daily[0].temp.min.toFixed(1)}°C</p>
                 <p>
                   Sunrise:{" "}
-                  {new Date(weather.daily[0].sunrise * 1000)
-                    .getHours()
-                    .toString()}
-                  :
-                  {new Date(weather.daily[0].sunrise * 1000)
-                    .getMinutes()
-                    .toString()}
+                  {timeFormatter.format(
+                    new Date(weather.daily[0].sunrise * 1000)
+                  )}
                 </p>
                 <p>
                   Sunset:{" "}
-                  {new Date(weather.daily[0].sunset * 1000)
-                    .getHours()
-                    .toString()}
-                  :
-                  {new Date(weather.daily[0].sunset * 1000)
-                    .getMinutes()
-                    .toString()}
+                  {timeFormatter.format(
+                    new Date(weather.daily[0].sunset * 1000)
+                  )}
                 </p>
               </div>
 
-              <div className="mb-7 w-full h-[120px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25"></div>
+              <div className="mb-7 w-full h-[120px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25">
+                <div>
+                  <div>
+                    <p>9pm</p>
+                  </div>
+                </div>
+              </div>
 
               <div className="w-full h-[250px] rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25"></div>
             </>
@@ -343,7 +357,7 @@ export default function ThreeScene() {
 
       {appState === APP_STATE.PLAY && (
         <>
-          {weather && (
+          {weather && timeFormatter && (
             <section className="absolute bottom-[28px] left-[32px] text-white">
               <h1 className="font-dm-sans-semi-bold text-[96px]/[0.9]">
                 {weather.current.temp.toFixed(1)}°C
@@ -354,28 +368,20 @@ export default function ThreeScene() {
                     city.slice(1).toLocaleLowerCase()}
                 </p>
                 <div className="font-mono text-[14px]">
-                  <p>Feels like: {weather.current.feels_like}°C</p>
-                  <p>High: {weather.daily[0].temp.max}°C</p>
-                  <p>Low: {weather.daily[0].temp.min}°C</p>
+                  <p>Feels like: {weather.current.feels_like.toFixed(1)}°C</p>
+                  <p>High: {weather.daily[0].temp.max.toFixed(1)}°C</p>
+                  <p>Low: {weather.daily[0].temp.min.toFixed(1)}°C</p>
                   <p>
                     Sunrise:{" "}
-                    {new Date(weather.daily[0].sunrise * 1000)
-                      .getHours()
-                      .toString()}
-                    :
-                    {new Date(weather.daily[0].sunrise * 1000)
-                      .getMinutes()
-                      .toString()}
+                    {timeFormatter.format(
+                      new Date(weather.daily[0].sunrise * 1000)
+                    )}
                   </p>
                   <p>
                     Sunset:{" "}
-                    {new Date(weather.daily[0].sunset * 1000)
-                      .getHours()
-                      .toString()}
-                    :
-                    {new Date(weather.daily[0].sunset * 1000)
-                      .getMinutes()
-                      .toString()}
+                    {timeFormatter.format(
+                      new Date(weather.daily[0].sunset * 1000)
+                    )}
                   </p>
                 </div>
               </div>
