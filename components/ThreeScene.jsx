@@ -172,10 +172,6 @@ export default function ThreeScene() {
       weather.current?.weather[0].main
     );
 
-    // // Detect iOS device
-    // const isIOS =
-    //   /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
     // Choose video format
     const fileExt = isIOS ? "mp4" : "webm";
     const videoPath = `/videos/${weatherCondition}.${fileExt}`;
@@ -579,22 +575,4 @@ export default function ThreeScene() {
       )}
     </>
   );
-}
-
-// Memo ------------------------------------------------
-{
-  /* <section className="absolute top-10 left-14">
-        {!isFetching &&
-          weatherData &&
-          weatherData.hourly.map((data, index) => (
-            <div key={index} className="mb-10">
-              <h1 className="font-bold text-xl">
-                {new Date(data.dt * 1000).toString()}
-              </h1>
-              <p>Weather: {data.weather[0].main}</p>
-              <p>Temperature: {data.temp}°C</p>
-              <p>Precipitation: {data.rain?.["1h"].toFix(1) || "0.0"} mm/h</p>
-            </div>
-          ))}
-      </section> */
 }

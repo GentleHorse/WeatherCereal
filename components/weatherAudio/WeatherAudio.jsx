@@ -8,22 +8,20 @@ export default function WeatherAudio({ weather }) {
   const { audioEnabled } = useStore();
 
   useEffect(() => {
-    if (!weather) return;
-    if (!audioEnabled) return;
-
+    if (!weather || !audioEnabled) return;
+  
     const { audio, fadeIn, fadeOut } = createFadableAudio(
       `/sounds/${weather}.mp3`,
-      1000, // fade time (miliseconds)
-      0.5 // volume
+      1000,
+      0.5
     );
-
-    audio.addEventListener("canplaythrough", fadeIn);
-
+  
+    const cancelFade = fadeIn();
+  
     return () => {
-      // Clean up previous audio
+      cancelFade?.(); // stops fade if mid-animation
       fadeOut();
       audio.src = "";
-      audio.removeEventListener("canplaythrough", fadeIn);
     };
   }, [weather, audioEnabled]);
 
