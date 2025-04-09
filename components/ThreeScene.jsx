@@ -32,6 +32,10 @@ export default function ThreeScene() {
   const [weather, setWeather] = useState(null);
   const [showDataRelatedModels, setShowDataRelatedModels] = useState(true);
 
+  const isIOS =
+    typeof window !== "undefined" &&
+    /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   /**
    * SET DATA BASED ON GEO LOCATION - INITIAL RENDER ONLY
    */
@@ -162,16 +166,24 @@ export default function ThreeScene() {
   let weatherCondition;
   useEffect(() => {
     const video = weatherIconVideo.current;
-    if (!video) return;
+    if (!video || !weather) return;
 
-    weatherCondition = weatherConditionConverter(
+    const weatherCondition = weatherConditionConverter(
       weather.current?.weather[0].main
     );
 
+    // // Detect iOS device
+    // const isIOS =
+    //   /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // Choose video format
+    const fileExt = isIOS ? "mp4" : "webm";
+    const videoPath = `/videos/${weatherCondition}.${fileExt}`;
+
     // Safely update video source
-    video.pause(); // optional, for smoothness
-    video.setAttribute("src", `/videos/${weatherCondition}.webm`);
-    video.load(); // important: tells browser to re-evaluate <source>
+    video.pause();
+    video.setAttribute("src", videoPath);
+    video.load();
   }, [weather]);
 
   function handleScroll() {
@@ -272,7 +284,9 @@ export default function ThreeScene() {
       <Modal
         open={cityModalOpen}
         onClose={cityModalCloseHandler}
-        className="relative m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+        className={`relative m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md ${
+          isIOS ? "bg-black" : "bg-[#333333]/45"
+        }`}
       >
         <section className="h-full flex flex-col items-center justify-center gap-16">
           <div className="flex flex-col items-center">
@@ -347,7 +361,9 @@ export default function ThreeScene() {
       <Modal
         open={dataModalOpen}
         onClose={dataModalCloseHandler}
-        className="relative overflow-hidden no-scrollbar no-select m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+        className={`relative overflow-hidden no-scrollbar no-select m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md ${
+          isIOS ? "bg-black" : "bg-[#333333]/45"
+        }`}
       >
         <section className="absolute top-[16px] w-full">
           {weatherCondition !== null && (
