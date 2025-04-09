@@ -7,6 +7,7 @@ import Experience from "./Experience.jsx";
 import Modal from "./modal/Modal.jsx";
 import LoadingScene3D from "./loadingScene/LoadingScene3D.jsx";
 import AudioConsentScreen from "./weatherAudio/AudioConsentScreen.jsx";
+import weatherConditionConverter from "@/utils/weatherConditionConverter.js";
 
 export default function ThreeScene() {
   const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
@@ -136,43 +137,7 @@ export default function ThreeScene() {
     const video = weatherIconVideo.current;
     if (!video) return;
 
-    switch (weather.current?.weather[0].main) {
-      case "Clear":
-        weatherCondition = "clear";
-        break;
-
-      case "Clouds":
-        weatherCondition = "clouds";
-        break;
-
-      case "Rain":
-        weatherCondition = "rain";
-        break;
-
-      case "Drizzle":
-        weatherCondition = "drizzle";
-        break;
-
-      case "Thunderstorm":
-        weatherCondition = "thunderstorm";
-        break;
-
-      case "Snow":
-        weatherCondition = "snow";
-        break;
-
-      case "Mist":
-      case "Smoke":
-      case "Haze":
-      case "Dust":
-      case "Fog":
-      case "Sand":
-      case "Ash":
-      case "Squall":
-      case "Tornado":
-        weatherCondition = "mist";
-        break;
-    }
+    weatherCondition = weatherConditionConverter(weather.current?.weather[0].main);
 
     // Safely update video source
     video.pause(); // optional, for smoothness

@@ -2,7 +2,8 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { InstancedRigidBodies } from "@react-three/rapier";
 import { Geometry, Base, Addition } from "@react-three/csg";
-import WeatherAudio from "../weatherAudio/WeatherAudio";
+import WeatherAudio from "../weatherAudio/WeatherAudio.jsx";
+import weatherConditionConverter from "@/utils/weatherConditionConverter.js";
 
 const Icon_Model_Num = 70;
 const Icon_Model_Scale = 0.035;
@@ -14,44 +15,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
   /**
    * SET WEATHER CONDITION
    */
-  let weatherCondition;
-  switch (data.current.weather[0].main) {
-    case "Clear":
-      weatherCondition = "clear";
-      break;
-
-    case "Clouds":
-      weatherCondition = "clouds";
-      break;
-
-    case "Rain":
-      weatherCondition = "rain";
-      break;
-
-    case "Drizzle":
-      weatherCondition = "drizzle";
-      break;
-
-    case "Thunderstorm":
-      weatherCondition = "thunderstorm";
-      break;
-
-    case "Snow":
-      weatherCondition = "snow";
-      break;
-
-    case "Mist":
-    case "Smoke":
-    case "Haze":
-    case "Dust":
-    case "Fog":
-    case "Sand":
-    case "Ash":
-    case "Squall":
-    case "Tornado":
-      weatherCondition = "mist";
-      break;
-  }
+  const weatherCondition = weatherConditionConverter(data.current.weather[0].main);
 
   /**
    * WEATHER ICON GEOMETRIES
