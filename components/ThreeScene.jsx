@@ -347,7 +347,7 @@ export default function ThreeScene() {
       <Modal
         open={dataModalOpen}
         onClose={dataModalCloseHandler}
-        className="relative overflow-hidden no-scrollbar m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
+        className="relative overflow-hidden no-scrollbar no-select m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md bg-[#333333]/45"
       >
         <section className="absolute top-[16px] w-full">
           {weatherCondition !== null && (
