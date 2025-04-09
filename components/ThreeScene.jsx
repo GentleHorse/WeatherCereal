@@ -12,6 +12,8 @@ import {
   localTimeFormatter,
   localTimeFormatterHourOnly,
 } from "@/utils/localTimeFormatter.js";
+import precipitationVisualizationData from "@/utils/precipitationVisualizationData.js";
+import hexToRgba from "@/utils/hexToRgba.js";
 
 export default function ThreeScene() {
   const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
@@ -413,7 +415,7 @@ export default function ThreeScene() {
                         {timeFormatterHourOnly.format(new Date(data.dt * 1000))}
                       </p>
                       <img
-                        src={`/images/data-state/${weatherConditionName}.svg`}
+                        src={`/images/data-state/weather/${weatherConditionName}.svg`}
                         className="w-8 h-8"
                       />
                       <p>{data.temp.toFixed(1)}°C</p>
@@ -424,8 +426,45 @@ export default function ThreeScene() {
 
               <div
                 ref={weatherData48hPrecipitationHorizontalScroll}
-                className="horizontal-scroll overflow-x-scroll no-scrollbar mb-7 px-5 py-4 w-full h-[250px] flex-row gap-7 rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25 font-sans text-[12px] text-white/70"
-              ></div>
+                className="horizontal-scroll overflow-x-scroll no-scrollbar mb-7 px-5 py-4 w-full h-[250px] flex flex-row gap-7 rounded-[10px] bg-[#333333]/80 shadow-lg shadow-[#000000]/25 font-sans text-[12px] text-center"
+              >
+                {weather.hourly.map((data, index) => {
+                  const precipitation = data.rain?.["1h"].toFixed(1) || "0.0";
+                  const { colorCode, barHeight, imageSrc, label } =
+                    precipitationVisualizationData(Number(precipitation), 72);
+                  const rgba = hexToRgba(colorCode, 0.7);
+
+                  return (
+                    <div
+                      key={index}
+                      className="h-full flex flex-col items-center justify-evenly"
+                    >
+                      <p>
+                        {timeFormatterHourOnly.format(new Date(data.dt * 1000))}
+                      </p>
+                      <div className="relative w-[4px] h-[72px] rounded-full bg-white/25">
+                        <div
+                          className="absolute bottom-0 w-[4px] rounded-full"
+                          style={{
+                            backgroundColor: colorCode,
+                            height: `${barHeight}px`,
+                          }}
+                        ></div>
+                      </div>
+
+                      <div style={{ color: rgba }}>
+                        <p>{precipitation}</p>
+                        <p className="text-[9px]">(mm/h)</p>
+                      </div>
+
+                      <img src={imageSrc} className="w-8 h-8" />
+                      <p className="w-14 text-[8px]" style={{ color: rgba }}>
+                        {label}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </>
           )}
 
@@ -538,7 +577,7 @@ export default function ThreeScene() {
               </h1>
               <p>Weather: {data.weather[0].main}</p>
               <p>Temperature: {data.temp}°C</p>
-              <p>Precipitation: {data.rain?.["1h"] || "0.00"} mm/h</p>
+              <p>Precipitation: {data.rain?.["1h"].toFix(1) || "0.0"} mm/h</p>
             </div>
           ))}
       </section> */
