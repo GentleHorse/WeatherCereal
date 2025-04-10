@@ -265,13 +265,13 @@ export default function ThreeScene() {
         camera={{ position: [10, 25, 25], near: 10, far: 55, fov: 12 }}
       >
         <Suspense fallback={<LoadingScene3D />}>
-          {weather && (
-            <Experience
-              weatherData={weather}
-              city={city.toUpperCase()}
-              showDataRelatedModels={showDataRelatedModels}
-            />
-          )}
+            {weather && (
+              <Experience
+                weatherData={weather}
+                city={city.toUpperCase()}
+                showDataRelatedModels={showDataRelatedModels}
+              />
+            )}
         </Suspense>
       </Canvas>
 

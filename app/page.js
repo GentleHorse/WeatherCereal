@@ -1,4 +1,4 @@
-import LoadingScene from "@/components/loadingScene/LoadingScene";
+import LoadingScene from "@/components/loadingScene/LoadingScene.jsx";
 import ThreeScene from "@/components/ThreeScene.jsx";
 import { Suspense } from "react";
 
@@ -9,7 +9,7 @@ export default function Home() {
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <Suspense fallback={<LoadingScene />}>
-        <ThreeScene />
+          <ThreeScene />
       </Suspense>
     </main>
   );

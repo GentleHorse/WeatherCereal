@@ -20,7 +20,7 @@ npm run dev
 - [@react-three/csg](https://github.com/pmndrs/react-three-csg)
 - [@react-three/rapier](https://github.com/pmndrs/react-three-rapier)
 - [@react-three/postprocessing](https://react-postprocessing.docs.pmnd.rs/introduction)
-- [zustand] (https://zustand.docs.pmnd.rs/getting-started/introduction)
+- [zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
 
 ## References
 
