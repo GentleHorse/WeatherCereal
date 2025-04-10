@@ -41,11 +41,28 @@ export default function Stage(props) {
         receiveShadow
       />
       <mesh
-        geometry={nodes["zen-stone-ground"].geometry}
-        material={materials["zen-garden-ground"]}
+        geometry={nodes["sakura-petals-on-floor"].geometry}
+        material={materials.sakura}
+        position={[-10.418, 0.318, 12.822]}
         castShadow
         receiveShadow
       />
+
+      <RigidBody
+        type="fixed"
+        colliders="trimesh"
+        restitution={0.7}
+        friction={0.25}
+      >
+        <mesh
+          geometry={nodes["zen-stone-ground"].geometry}
+          // material={materials["zen-garden-ground"]}
+          castShadow
+          receiveShadow
+        >
+          <meshStandardMaterial color="#91989F" />
+        </mesh>
+      </RigidBody>
 
       <RigidBody
         type="fixed"
