@@ -12,12 +12,12 @@ export default function AudioConsentScreen() {
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <img
-          src="/images/play-state/audio-on.svg"
+          src="/images/audio-consent/audio-consent.svg"
           className="w-[95px] h-[95px] opacity-90"
         />
 
         <div className="flex flex-col items-center">
-          <h1 className="mx-8 mb-6 text-md text-center">
+          <h1 className="mx-8 mb-6 text-base text-center">
             Would you like to enable ambient sound?
           </h1>
           <div className="flex gap-4 text-sm">
