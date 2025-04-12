@@ -13,7 +13,7 @@ export default function WeatherAudio({ weather }) {
     const { audio, fadeIn, fadeOut } = createFadableAudio(
       `/sounds/${weather}.mp3`,
       1000,
-      0.5
+      1.0
     );
   
     const cancelFade = fadeIn();
