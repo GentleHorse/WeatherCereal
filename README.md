@@ -22,7 +22,7 @@
 
 - ☁️ **Falling 3D Weather Icons** – Physics-driven particles reflect current weather.
 - 🪷 **Zen Garden Scene** – Minimalist, meditative 3D space.
-- 🎧 **Auto-play Ambient Audio** – Weather-based sounds (e.g. rain, wind, birds).
+- 🎧 **Auto-play Ambient Audio** – Nature-based sounds (e.g. rain, wind, birds).
 - ⏱️ **48-Hour Forecast Timeline** – Clear visuals with categorized icons.
 - ☔ **Precipitation Tagging System** – Labelled detail (e.g., "misty", "dry air", "heavy rain").
 - 📍 **Geo-based Auto Location** – Fetches forecast based on user’s location.
@@ -37,36 +37,36 @@
 | 🌐 **Framework**     | Next.js, React               |
 | 🎮 **3D Engine**     | React Three Fiber, Rapier.js |
 | 🌤️ **Weather API**   | OpenWeatherMap API           |
-| 🎨 **Design**        | Custom 3D Icons, GLSL shaders |
-| 🔊 **Audio**         | Dynamic ambient audio engine |
+| 🎨 **Design**        | Custom 3D Icons, Gobo-like custom "komorebi" shadows |
+| 🔊 **Audio**         | Dynamic nature-based ambient audio |
 | 📦 **Deployment**    | Vercel                       |
 
 ---
 
 ## 📥 Installation & Setup
 
-### **1️⃣ Clone This Repository**
+### 1️⃣ Clone This Repository
 
-```sh
+```bash
 git clone https://github.com/GentleHorse/Weather-Cereal.git
 cd Weather-Cereal
 ```
 
-### **2️⃣ Install Dependencies**
+### 2️⃣ Install Dependencies
 
-```sh
+```bash
 npm install
 ```
 
-### **3️⃣ Create a `.env.local` File**
+### 3️⃣ Create a `.env.local` File
 
+```env
+API_KEY=your_openweathermap_api_key_here
 ```
-VITE_WEATHER_API_KEY=your_openweathermap_api_key_here
-```
 
-### **4️⃣ Run the Project Locally**
+### 4️⃣ Start the Development Server
 
-```sh
+```bash
 npm run dev
 ```
 
@@ -77,6 +77,7 @@ _(Runs on `localhost:3000` by default.)_
 ## 🔒 Environment Variables
 
 To keep your API key secure, make sure you:
+
 - Store it in a `.env.local` file
 - Add `.env.local` to `.gitignore`
 
@@ -91,39 +92,30 @@ To keep your API key secure, make sure you:
 This app explores the psychological side of daily habits. The idea: **weather apps aren't just about planning, but also emotional readiness**. By integrating visual calmness, sound design, and weather data, Weather Cereal turns a routine check-in into a **mood-lifting micro-moment**.
 
 Inspired by:
+
 - 🧘‍♂️ Morning mindfulness
 - 🍵 The ritual of breakfast
 - ☀️ Real-world weather needs (especially in rainy Netherlands!)
+- 🎐 Japanese aesthetic concepts like Zen gardens and Komorebi
 
 ---
 
-## 📖 Case Study
-
-For insights into the creative intent, technical execution, and UX strategy behind this project:  
-🔗 **[Read Full Case Study](https://toshihito-endo.com/weather-cereal)**
-
----
-
-## 📚 Libraries
+## 📚 Libraries Used
 
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - [three](https://threejs.org/)
 - [leva](https://github.com/pmndrs/leva)
 - [r3f-perf](https://github.com/utsuboco/r3f-perf)
 - [postprocessing](https://pmndrs.github.io/postprocessing/public/docs/)
-- [@react-three/fiber](https://r3f.docs.pmnd.rs/getting-started/introduction)
+- [@react-three/fiber](https://r3f.pmnd.rs/)
 - [@react-three/drei](https://github.com/pmndrs/drei)
-- [@react-three/csg](https://github.com/pmndrs/react-three-csg)
 - [@react-three/rapier](https://github.com/pmndrs/react-three-rapier)
-- [@react-three/postprocessing](https://react-postprocessing.docs.pmnd.rs/introduction)
-- [zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
+- [zustand](https://zustand.pmnd.rs/)
 
 ---
 
 ## 📧 Contact
 
-📌 **Portfolio:** [Portfolio](https://toshihito-endo.com/works)  
-📌 **GitHub:** [GitHub](https://github.com/GentleHorse)  
-📌 **LinkedIn:** [LinkedIn](https://www.linkedin.com/in/toshihito-endo-a68a82172/)
-
----
+📌 **Portfolio:** [toshihito-endo.com](https://toshihito-endo.com/works)  
+📌 **GitHub:** [GentleHorse](https://github.com/GentleHorse)  
+📌 **LinkedIn:** [Toshihito Endo](https://www.linkedin.com/in/toshihito-endo-a68a82172/)
