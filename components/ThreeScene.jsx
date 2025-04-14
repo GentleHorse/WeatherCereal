@@ -93,6 +93,18 @@ export default function ThreeScene() {
   }, [weather]);
 
   /**
+   * SFX - CLICK
+   */
+  const clickSound = useRef(null);
+  function playClickSound() {
+    if (clickSound.current && audioEnabled) {
+      // Clone to allow overlap playback or rapid replay
+      const clickSoundClone = clickSound.current.cloneNode();
+      clickSoundClone.play();
+    }
+  }
+
+  /**
    * MODAL - CITY
    */
   useEffect(() => {
@@ -265,15 +277,17 @@ export default function ThreeScene() {
         camera={{ position: [15, 20, 20], near: 10, far: 55, fov: 12 }}
       >
         <Suspense fallback={<LoadingScene3D />}>
-            {weather && (
-              <Experience
-                weatherData={weather}
-                city={city.toUpperCase()}
-                showDataRelatedModels={showDataRelatedModels}
-              />
-            )}
+          {weather && (
+            <Experience
+              weatherData={weather}
+              city={city.toUpperCase()}
+              showDataRelatedModels={showDataRelatedModels}
+            />
+          )}
         </Suspense>
       </Canvas>
+
+      <audio ref={clickSound} src="/sounds/click.mp3" preload="auto" />
 
       {appState === APP_STATE.PLAY && <AudioConsentScreen />}
 
@@ -313,7 +327,10 @@ export default function ThreeScene() {
             {!isFetching ? (
               <button
                 className="focus:outline-none hover:cursor-pointer px-6 py-4 bg-linear-to-r/hsl from-[#113285]/80 to-[#227D51]/80 shadow-lg rounded-2xl"
-                onClick={changeCity}
+                onClick={() => {
+                  changeCity();
+                  playClickSound();
+                }}
               >
                 Change City
               </button>
@@ -345,7 +362,10 @@ export default function ThreeScene() {
 
             <button
               className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
-              onClick={cityModalCloseHandler}
+              onClick={() => {
+                cityModalCloseHandler();
+                playClickSound();
+              }}
               disabled={isFetching ? true : false}
             >
               Go Back
@@ -483,7 +503,10 @@ export default function ThreeScene() {
           <div className="mt-[48px] mb-[24px] flex flex-col items-center font-sans">
             <button
               className="focus:outline-none hover:cursor-pointer p-3 text-white/70 rounded-2xl"
-              onClick={dataModalCloseHandler}
+              onClick={() => {
+                dataModalCloseHandler();
+                playClickSound();
+              }}
             >
               Go Back
             </button>
@@ -530,6 +553,7 @@ export default function ThreeScene() {
               onClick={() => {
                 if (audioEnabled) changeAudioEnabled(false);
                 if (!audioEnabled) changeAudioEnabled(true);
+                playClickSound();
               }}
             >
               <img
@@ -546,6 +570,7 @@ export default function ThreeScene() {
               className="relative focus:outline-none hover:cursor-pointer"
               onClick={() => {
                 changeAppState(APP_STATE.CITY);
+                playClickSound();
               }}
             >
               <img
@@ -560,6 +585,7 @@ export default function ThreeScene() {
               className="relative focus:outline-none hover:cursor-pointer"
               onClick={() => {
                 changeAppState(APP_STATE.DATA_48H);
+                playClickSound();
               }}
             >
               <img
