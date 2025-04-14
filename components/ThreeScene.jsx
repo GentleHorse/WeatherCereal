@@ -262,7 +262,7 @@ export default function ThreeScene() {
         flat
         shadows
         gl={{ antialias: false }}
-        camera={{ position: [20, 27.5, 25], near: 10, far: 55, fov: 12 }}
+        camera={{ position: [15, 20, 20], near: 10, far: 55, fov: 12 }}
       >
         <Suspense fallback={<LoadingScene3D />}>
             {weather && (

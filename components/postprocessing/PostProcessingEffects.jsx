@@ -21,7 +21,7 @@ export default function PostProcessingEffects({ depthOfField = true }) {
       {!!depthOfField && (
         <DepthOfField
           // {...depthOfFieldConfig}
-          focusRange={0.075}
+          focusRange={0.045}
           bokehScale={10}
           target={[0, 0, 0]}
         />
