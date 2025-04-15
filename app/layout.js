@@ -30,8 +30,42 @@ const poppinsBold = Poppins({
 });
 
 export const metadata = {
-  title: "Weather Cereal",
-  description: "Weather app with spoonful of joke",
+  title: "Weather Cereal – A Zen Weather Experience",
+  description:
+    "A calming, 3D weather app inspired by Japanese Zen gardens. Visualize real-time forecasts with ambient sounds and cinematic visuals.",
+  keywords: [
+    "weather app",
+    "zen garden",
+    "3D weather",
+    "nature sounds",
+    "ambient weather app",
+    "weather visualization",
+    "calming app",
+  ],
+  openGraph: {
+    title: "Weather Cereal – A Zen Weather Experience",
+    description:
+      "A cinematic, calming weather app that blends real-time data with peaceful 3D Zen visuals.",
+    url: "https://weather-cereal.vercel.app/",
+    siteName: "Weather Cereal",
+    images: [
+      {
+        url: "https://weather-cereal.vercel.app/images/preview/preview.png", 
+        width: 1200,
+        height: 630,
+        alt: "Weather Cereal Preview",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Weather Cereal – A Zen Weather Experience",
+    description:
+      "Check weather around the world through a cinematic Zen garden with ambient sounds.",
+    images: ["https://weather-cereal.vercel.app/images/preview/preview.png"],
+    creator: "@toshihito_endo",
+  },
 };
 
 export default function RootLayout({ children }) {

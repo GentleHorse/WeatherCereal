@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://weather-cereal.vercel.app/sitemap.xml
