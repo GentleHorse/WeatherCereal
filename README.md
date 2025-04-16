@@ -1,8 +1,8 @@
 # 🍵 Weather Cereal – A Zen Weather Experience
 
 🌤️ **A calming, mobile-first weather app that visualizes real-time forecasts through ambient sounds and physics-based 3D scenes.**  
-🔗 **Live Demo:** [weather-cereal.vercel.app](https://weather-cereal.vercel.app/)  
-📖 **Case Study:** [project page](https://toshihito-endo.com/weather-cereal)
+🔗 **Live Demo:** [live](https://weather-cereal.vercel.app/)  
+📖 **Case Study:** [case study](https://toshihito-endo.com/weather-cereal)
 
 ---
 
@@ -14,7 +14,7 @@
 - 📱 **Mobile-first design** tailored for daily check-ins.
 - 🌍 Supports real-time **geo-location weather** + manual city lookup.
 
-![Preview Image](/public/videos/weather-cereal/weather-cereal-preview.gif)
+![Preview Image](/public/videos/preview/preview.gif)
 
 ---
 
@@ -32,14 +32,14 @@
 
 ## 🛠️ Tech Stack
 
-| **Category**        | **Technology Used**          |
-| ------------------- | ---------------------------- |
-| 🌐 **Framework**     | Next.js, React               |
-| 🎮 **3D Engine**     | React Three Fiber, Rapier.js |
-| 🌤️ **Weather API**   | OpenWeatherMap API           |
-| 🎨 **Design**        | Custom 3D Icons, Gobo-like custom "komorebi" shadows |
-| 🔊 **Audio**         | Dynamic nature-based ambient audio |
-| 📦 **Deployment**    | Vercel                       |
+| **Category**       | **Technology Used**                                  |
+| ------------------ | ---------------------------------------------------- |
+| 🌐 **Framework**   | Next.js, React                                       |
+| 🎮 **3D Engine**   | React Three Fiber, Rapier.js                         |
+| 🌤️ **Weather API** | OpenWeatherMap API                                   |
+| 🎨 **Design**      | Custom 3D Icons, Gobo-like custom "komorebi" shadows |
+| 🔊 **Audio**       | Dynamic nature-based ambient audio                   |
+| 📦 **Deployment**  | Vercel                                               |
 
 ---
 
