@@ -21,7 +21,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
    * WEATHER ICON GEOMETRIES
    */
   // clear
-  const clear = useGLTF("/models/weather-icons/clear-small.glb");
+  const clear = useGLTF("/models/weather-icons/clear.glb");
   const clearGeometry = (
     <Geometry useGroups>
       <Base
@@ -38,7 +38,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
   );
 
   // cloud
-  const cloud = useGLTF("/models/weather-icons/clouds-small.glb");
+  const cloud = useGLTF("/models/weather-icons/cloud.glb");
   const cloudGeometry = (
     <Geometry useGroups>
       <Base
@@ -55,23 +55,25 @@ export default function FallingWeatherIcons({ data, ...props }) {
   );
 
   // drizzle
-  const drizzle = useGLTF("/models/weather-icons/drizzle-small.glb");
+  const drizzle = useGLTF("/models/weather-icons/drizzle.glb");
+  const drizzleScaleFix = 7.5;
   const drizzleGeometry = (
     <Geometry useGroups>
       <Base
-        geometry={drizzle.nodes.Curve063.geometry}
+        scale={Icon_Model_Scale * drizzleScaleFix}
+        geometry={drizzle.nodes.Curve079.geometry}
         material={drizzle.materials.rainMaterial}
       />
       <Addition
-        scale={Icon_Model_Scale}
-        geometry={drizzle.nodes.Curve063_1.geometry}
+        scale={Icon_Model_Scale * drizzleScaleFix}
+        geometry={drizzle.nodes.Curve079_1.geometry}
         material={drizzle.materials.edgeMaterial}
       />
     </Geometry>
   );
 
   // mist
-  const mist = useGLTF("/models/weather-icons/mist-small.glb");
+  const mist = useGLTF("/models/weather-icons/mist.glb");
   const mistGeometry = (
     <Geometry useGroups>
       <Base
@@ -88,7 +90,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
   );
 
   // rain
-  const rain = useGLTF("/models/weather-icons/rain-small.glb");
+  const rain = useGLTF("/models/weather-icons/rain.glb");
   const rainGeometry = (
     <Geometry useGroups>
       <Base
@@ -105,7 +107,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
   );
 
   // snow
-  const snow = useGLTF("/models/weather-icons/snow-small.glb");
+  const snow = useGLTF("/models/weather-icons/snow.glb");
   const snowGeometry = (
     <Geometry useGroups>
       <Base
@@ -122,7 +124,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
   );
 
   // thunderstorm
-  const thunderstorm = useGLTF("/models/weather-icons/thunderstorm-small.glb");
+  const thunderstorm = useGLTF("/models/weather-icons/thunderstorm.glb");
   const thunderstormGeometry = (
     <Geometry useGroups>
       <Base
@@ -216,6 +218,14 @@ export default function FallingWeatherIcons({ data, ...props }) {
                 args={[undefined, undefined, objectsCount]}
               >
                 {weatherGeometry}
+
+                {/* {clearGeometry} */}
+                {/* {cloudGeometry} */}
+                {/* {drizzleGeometry} */}
+                {/* {mistGeometry} */}
+                {/* {rainGeometry} */}
+                {/* {snowGeometry} */}
+                {/* {thunderstormGeometry} */}
               </instancedMesh>
             </InstancedRigidBodies>
           </Suspense>
@@ -225,10 +235,10 @@ export default function FallingWeatherIcons({ data, ...props }) {
   );
 }
 
-useGLTF.preload("/models/weather-icons/clear-small.glb");
-useGLTF.preload("/models/weather-icons/clouds-small.glb");
-useGLTF.preload("/models/weather-icons/drizzle-small.glb");
-useGLTF.preload("/models/weather-icons/mist-small.glb");
-useGLTF.preload("/models/weather-icons/rain-small.glb");
-useGLTF.preload("/models/weather-icons/snow-small.glb");
-useGLTF.preload("/models/weather-icons/thunderstorm-small.glb");
+useGLTF.preload("/models/weather-icons/clear.glb");
+useGLTF.preload("/models/weather-icons/clouds.glb");
+useGLTF.preload("/models/weather-icons/drizzle.glb");
+useGLTF.preload("/models/weather-icons/mist.glb");
+useGLTF.preload("/models/weather-icons/rain.glb");
+useGLTF.preload("/models/weather-icons/snow.glb");
+useGLTF.preload("/models/weather-icons/thunderstorm.glb");
