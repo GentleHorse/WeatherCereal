@@ -217,9 +217,9 @@ export default function FallingWeatherIcons({ data, ...props }) {
                 castShadow
                 args={[undefined, undefined, objectsCount]}
               >
-                {weatherGeometry}
+                {/* {weatherGeometry} */}
 
-                {/* {clearGeometry} */}
+                {clearGeometry}
                 {/* {cloudGeometry} */}
                 {/* {drizzleGeometry} */}
                 {/* {mistGeometry} */}

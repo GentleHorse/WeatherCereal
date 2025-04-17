@@ -1,6 +1,11 @@
 "use client";
 
-import { OrbitControls, Text3D, Center } from "@react-three/drei";
+import {
+  OrbitControls,
+  Text3D,
+  Center,
+  MeshReflectorMaterial,
+} from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 
@@ -9,6 +14,8 @@ import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
 import CustomEnvironment from "./customEnvironment/CustomEnvironment.jsx";
 import Stage from "./stage/Stage.jsx";
 import FloatingSakuraPetals from "./floatingSakuraPetals/FloatingSakuraPetals.jsx";
+
+const GRAVITY = -9.81 * 0.025; //-1.625
 
 export default function Experience({
   weatherData,
@@ -33,14 +40,28 @@ export default function Experience({
 
       <PostProcessingEffects depthOfField={true} />
 
-      <FloatingSakuraPetals petalNum={80} />
+      {/* <FloatingSakuraPetals petalNum={80} /> */}
 
-      <Physics debug={false} gravity={[0, -1.625, 0]}>
+      <Physics debug={false} gravity={[0, GRAVITY, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>
           <CuboidCollider restitution={0.1} args={[1000, 0.1, 1000]} />
+          <mesh rotation-x={-Math.PI * 0.5}>
+            <planeGeometry args={[1000, 1000]} />
+            <MeshReflectorMaterial
+              blur={[400, 100]}
+              resolution={1024}
+              mixBlur={1}
+              mixStrength={15}
+              depthScale={1}
+              minDepthThreshold={0.85}
+              color="#151515"
+              metalness={0.6}
+              roughness={1}
+            />
+          </mesh>
         </RigidBody>
 
-        <Stage scale={0.75} position-y={-0.5} />
+        {/* <Stage scale={0.75} position-y={-0.5} /> */}
 
         {weatherData && showDataRelatedModels && (
           <FallingWeatherIcons data={weatherData} />
@@ -49,7 +70,7 @@ export default function Experience({
 
       {showDataRelatedModels && weatherData && city && (
         <>
-          <WeatherText3D
+          {/* <WeatherText3D
             text={`${weatherData.hourly[0].temp.toFixed(1)}°C`}
             textSize={0.275}
             position={[1.0, 0.75, -2.0]}
@@ -62,7 +83,7 @@ export default function Experience({
             position={[1.0, 0, -2.0]}
             top
             left
-          />
+          /> */}
         </>
       )}
     </>

@@ -8,7 +8,9 @@ export default function CustomEnvironment({ backgroundColor }) {
     <>
       {!!backgroundColor && <color attach="background" args={["#f0f0f0"]} />}
 
-      <ambientLight intensity={0.35} />
+      <ambientLight intensity={1.35} />
+
+      {/* <ambientLight intensity={0.35} /> */}
       <directionalLight
         intensity={2.25}
         position={[-20, 20, 5]}
@@ -26,14 +28,23 @@ export default function CustomEnvironment({ backgroundColor }) {
       />
 
       <Environment resolution={32}>
-        <Lightformer position={[10, 10, 10]} scale={10} intensity={2} />
+        {/* <Lightformer position={[10, 10, 10]} scale={10} intensity={2} />
         <Lightformer
           position={[10, 0, -10]}
           scale={8}
           color="#f0f0f0"
           intensity={4}
         />
-        <Lightformer position={[-10, -10, -10]} scale={10} intensity={2} />
+        <Lightformer position={[-10, -10, -10]} scale={10} intensity={2} /> */}
+
+        <Lightformer position={[10, 10, 10]} scale={10} intensity={10} />
+        <Lightformer
+          position={[10, 0, -10]}
+          scale={8}
+          color="#f0f0f0"
+          intensity={12}
+        />
+        <Lightformer position={[-10, -10, -10]} scale={10} intensity={10} />
       </Environment>
     </>
   );
