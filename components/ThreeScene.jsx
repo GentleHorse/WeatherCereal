@@ -287,11 +287,11 @@ export default function ThreeScene() {
         </Suspense>
       </Canvas>
 
-      {/* <audio ref={clickSound} src="/sounds/click.mp3" preload="auto" /> */}
+      <audio ref={clickSound} src="/sounds/click.mp3" preload="auto" />
 
-      {/* {appState === APP_STATE.PLAY && <AudioConsentScreen />} */}
+      {appState === APP_STATE.PLAY && <AudioConsentScreen />}
 
-      {/* <Modal
+      <Modal
         open={cityModalOpen}
         onClose={cityModalCloseHandler}
         className={`relative m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md ${
@@ -372,9 +372,9 @@ export default function ThreeScene() {
             </button>
           </div>
         </section>
-      </Modal> */}
+      </Modal>
 
-      {/* <Modal
+      <Modal
         open={dataModalOpen}
         onClose={dataModalCloseHandler}
         className={`relative overflow-hidden no-scrollbar no-select m-auto w-[90vw] h-[90vh] pt-[5vh] rounded-2xl backdrop-blur-md ${
@@ -512,9 +512,9 @@ export default function ThreeScene() {
             </button>
           </div>
         </section>
-      </Modal> */}
+      </Modal>
 
-      {/* {appState === APP_STATE.PLAY && (
+      {appState === APP_STATE.PLAY && (
         <>
           {weather && timeFormatter && (
             <section className="absolute bottom-[28px] left-[32px] text-white">
@@ -598,7 +598,7 @@ export default function ThreeScene() {
             </button>
           </section>
         </>
-      )} */}
+      )}
     </>
   );
 }
