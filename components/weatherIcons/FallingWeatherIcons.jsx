@@ -59,7 +59,6 @@ export default function FallingWeatherIcons({ data, ...props }) {
   const drizzleGeometry = (
     <Geometry useGroups>
       <Base
-        scale={0.15}
         geometry={drizzle.nodes.Curve063.geometry}
         material={drizzle.materials.rainMaterial}
       />
