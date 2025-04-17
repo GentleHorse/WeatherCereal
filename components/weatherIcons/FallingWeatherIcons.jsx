@@ -236,7 +236,7 @@ export default function FallingWeatherIcons({ data, ...props }) {
 }
 
 useGLTF.preload("/models/weather-icons/clear.glb");
-useGLTF.preload("/models/weather-icons/clouds.glb");
+useGLTF.preload("/models/weather-icons/cloud.glb");
 useGLTF.preload("/models/weather-icons/drizzle.glb");
 useGLTF.preload("/models/weather-icons/mist.glb");
 useGLTF.preload("/models/weather-icons/rain.glb");
