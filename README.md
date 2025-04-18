@@ -1,9 +1,13 @@
-# 🌸 Weather Cereal – A Zen Weather Forecast Experience
+# 🍵 Weather Cereal – A Zen Weather Experience
 
 A mobile-first, sensory-rich weather app inspired by **Japanese Zen gardens** — blending real-time forecasts with ambient **nature sounds**, handcrafted **3D scenes**, and cinematic transitions.
 
 🔗 **Live Site:** [weather-cereal.vercel.app](https://weather-cereal.vercel.app)  
 📖 **Case Study:** [toshihito-endo.com/weather-cereal](https://toshihito-endo.com/weather-cereal)
+
+<br />
+
+![Preview Image](/public/videos/preview/preview.gif)
 
 ---
 
