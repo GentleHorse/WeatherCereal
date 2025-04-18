@@ -51,15 +51,15 @@ Rather than just data, it offers a **mood-lifting experience** through:
 
 Each weather condition is driven by multiple **stacked ambient layers**:
 
-| Weather         | Layers                                   |
-| --------------- | ---------------------------------------- |
-| ☀️ Clear        | Waterfall, birds, wind, leaves, stream   |
-| ☁️ Clouds       | Wind, distant birds, subtle forest drone |
-| 🌧️ Rain         | Rainfall, puddle drips, wet leaves       |
-| 🌦️ Drizzle      | Light rain, soft patter, ambient tones   |
-| ⛈️ Thunderstorm | Thunder rumbles, rain, low-end textures  |
-| ❄️ Snow         | Wind, crunching snow, frosty textures    |
-| 🌫️ Mist         | Forest hum, drips, foggy echoes          |
+| Weather         | Layers                                              |
+| --------------- | --------------------------------------------------- |
+| ☀️ Clear        | Waterfall, wind, leaves, birds, stream              |
+| ☁️ Clouds       | Wind, leaves, birds, stream                         |
+| 🌧️ Rain         | Wind, dripping rain, rainfall                       |
+| 🌦️ Drizzle      | Wind, leaves, stream, dripping rain, rainfall       |
+| ⛈️ Thunderstorm | Waterfall, wind, stream, rainfall, thunder rumbles  |
+| ❄️ Snow         | Wind, frost cracking, crunching snow, wind chimes   |
+| 🌫️ Mist         | Wind, leaves, birds                                 |
 
 ---
 
