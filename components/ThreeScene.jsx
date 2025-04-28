@@ -24,6 +24,7 @@ export default function ThreeScene() {
   const weatherData48hWeatherHorizontalScroll = useRef();
   const weatherData48hPrecipitationHorizontalScroll = useRef();
 
+  const [isClient, setIsClient] = useState(false);
   const [cityModalOpen, setCityModalOpen] = useState(false);
   const [dataModalOpen, setDataModalOpen] = useState(false);
   const [city, setCity] = useState("");
@@ -36,18 +37,21 @@ export default function ThreeScene() {
     typeof window !== "undefined" &&
     /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
+  // Check whether client is rendered or not
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   /**
    * SET DATA BASED ON GEO LOCATION - INITIAL RENDER ONLY
    */
   useEffect(() => {
     const getLocationAndFetchWeather = async () => {
-      if (!weather && typeof window !== "undefined") {
+      if (!weather && isClient) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-
             try {
-              // Send lat/lon to your server-side API (secure!)
               const res = await fetch(
                 `/api/weather?lat=${latitude}&lon=${longitude}`
               );
@@ -55,29 +59,26 @@ export default function ThreeScene() {
 
               if (res.ok) {
                 setWeather(data);
-                setCity(data.city || ""); // Optional: your API could return the city name too
+                setCity(data.city || "");
                 changeAppState(APP_STATE.PLAY);
               } else {
                 throw new Error(data.message || "Failed to fetch weather");
               }
             } catch (err) {
-              console.warn(
-                "Weather fetch failed. Ask user for city name:",
-                err
-              );
-              changeAppState(APP_STATE.CITY); // fallback to city modal
+              console.warn("Weather fetch failed:", err);
+              changeAppState(APP_STATE.CITY);
             }
           },
           (error) => {
-            console.warn("Geolocation denied. Ask user for city name:", error);
-            changeAppState(APP_STATE.CITY); // fallback to city modal
+            console.warn("Geolocation denied:", error);
+            changeAppState(APP_STATE.CITY);
           }
         );
       }
     };
 
     getLocationAndFetchWeather();
-  }, []);
+  }, [weather, isClient]);
 
   /**
    * TIME FORMATTERS
