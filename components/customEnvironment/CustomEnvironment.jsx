@@ -25,7 +25,7 @@ export default function CustomEnvironment({ backgroundColor }) {
         scale={40.0}
       />
 
-      <Environment resolution={32}>
+      <Environment resolution={16}>
         <Lightformer position={[10, 10, 10]} scale={10} intensity={2} />
         <Lightformer
           position={[10, 0, -10]}

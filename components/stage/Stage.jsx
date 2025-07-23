@@ -34,7 +34,7 @@ export default function Stage(props) {
     <group {...props} dispose={null}>
       <RigidBody
         type="fixed"
-        colliders="trimesh"
+        colliders="hull"
         restitution={0.7}
         friction={0.25}
       >
@@ -69,20 +69,13 @@ export default function Stage(props) {
         receiveShadow
       />
 
-      <RigidBody
-        type="fixed"
-        colliders="trimesh"
-        restitution={0.7}
-        friction={0.25}
+      <mesh
+        geometry={nodes["zen-stone-ground"].geometry}
+        castShadow
+        receiveShadow
       >
-        <mesh
-          geometry={nodes["zen-stone-ground"].geometry}
-          castShadow
-          receiveShadow
-        >
-          <meshStandardMaterial color="#91989F" />
-        </mesh>
-      </RigidBody>
+        <meshStandardMaterial color="#91989F" />
+      </mesh>
 
       <RigidBody
         type="fixed"
@@ -101,7 +94,7 @@ export default function Stage(props) {
 
       <RigidBody
         type="fixed"
-        colliders="trimesh"
+        colliders="hull"
         restitution={0.7}
         friction={0.25}
       >
@@ -114,20 +107,13 @@ export default function Stage(props) {
         />
       </RigidBody>
 
-      <RigidBody
-        type="fixed"
-        colliders="trimesh"
-        restitution={0.7}
-        friction={0.25}
-      >
-        <mesh
-          geometry={nodes["rock-for-expression"].geometry}
-          material={rockMaterial}
-          position={[-1.558, 0, -6.578]}
-          castShadow
-          receiveShadow
-        />
-      </RigidBody>
+      <mesh
+        geometry={nodes["rock-for-expression"].geometry}
+        material={rockMaterial}
+        position={[-1.558, 0, -6.578]}
+        castShadow
+        receiveShadow
+      />
     </group>
   );
 }
