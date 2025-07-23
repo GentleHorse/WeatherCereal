@@ -16,8 +16,13 @@ import precipitationVisualizationData from "@/utils/precipitationVisualizationDa
 import hexToRgba from "@/utils/hexToRgba.js";
 
 export default function ThreeScene() {
-  const { appState, changeAppState, audioEnabled, changeAudioEnabled } =
-    useStore((state) => state);
+  const {
+    appState,
+    changeAppState,
+    audioEnabled,
+    changeAudioEnabled,
+    changeIsDepthOfField,
+  } = useStore((state) => state);
   const userInputCityName = useRef();
   const weatherIconVideo = useRef();
   const weatherData48hScroll = useRef();
@@ -109,7 +114,11 @@ export default function ThreeScene() {
    * MODAL - CITY
    */
   useEffect(() => {
-    if (appState === APP_STATE.CITY) setCityModalOpen(true);
+    if (appState === APP_STATE.CITY) {
+      setCityModalOpen(true);
+      setShowDataRelatedModels(false);
+      changeIsDepthOfField(false);
+    }
   }, [appState]);
 
   function cityModalCloseHandler() {
@@ -118,11 +127,11 @@ export default function ThreeScene() {
     setError("");
     setShowDataRelatedModels(true);
     changeAppState(APP_STATE.PLAY);
+    changeIsDepthOfField(true);
   }
 
   async function changeCity() {
     setIsFetching(true);
-    setShowDataRelatedModels(false);
 
     try {
       const response = await fetch(
@@ -150,6 +159,8 @@ export default function ThreeScene() {
   useEffect(() => {
     if (appState === APP_STATE.DATA_48H) {
       setDataModalOpen(true);
+      changeIsDepthOfField(false);
+      setShowDataRelatedModels(false);
     }
   }, [appState]);
 
@@ -172,6 +183,8 @@ export default function ThreeScene() {
       video.pause(); // optional: stop animation loop
     }
 
+    setShowDataRelatedModels(true);
+    changeIsDepthOfField(true);
     setDataModalOpen(false);
     changeAppState(APP_STATE.PLAY);
   }
@@ -275,7 +288,7 @@ export default function ThreeScene() {
         flat
         shadows
         gl={{ antialias: false }}
-        camera={{ position: [15, 20, 20], near: 10, far: 55, fov: 12 }}
+        camera={{ position: [8, 10, 15], near: 10, far: 55, fov: 12 }}
       >
         <Suspense fallback={<LoadingScene3D />}>
           {weather && (

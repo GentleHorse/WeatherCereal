@@ -3,6 +3,7 @@
 import { OrbitControls, Text3D, Center } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import { useStore } from "@/stores/store.js";
 
 import PostProcessingEffects from "./postprocessing/PostProcessingEffects.jsx";
 import FallingWeatherIcons from "./weatherIcons/FallingWeatherIcons.jsx";
@@ -17,6 +18,8 @@ export default function Experience({
   city,
   showDataRelatedModels,
 }) {
+  const { isDepthOfField } = useStore((state) => state);
+
   return (
     <>
       {/* <Perf position="top-left" /> */}
@@ -31,11 +34,11 @@ export default function Experience({
         maxPolarAngle={Math.PI * 0.35}
       />
 
-      <CustomEnvironment backgroundColor={true} />
+      <CustomEnvironment backgroundColor={false} />
 
-      <PostProcessingEffects depthOfField={true} />
+      <PostProcessingEffects depthOfField={isDepthOfField} />
 
-      <FloatingSakuraPetals petalNum={80} />
+      {showDataRelatedModels && <FloatingSakuraPetals petalNum={80} />}
 
       <Physics debug={false} gravity={[0, GRAVITY, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>
@@ -87,12 +90,12 @@ function WeatherText3D({
           font="./fonts/helvetiker_regular.typeface.json"
           size={textSize}
           height={0.2}
-          curveSegments={12}
+          curveSegments={6}
           bevelEnabled
           bevelThickness={0.025}
           bevelSize={0.025}
           bevelOffset={0}
-          bevelSegments={5}
+          bevelSegments={2}
           castShadow
           receiveShadow
         >
