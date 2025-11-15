@@ -14,7 +14,7 @@ export default function Home() {
       </Suspense>
 
       <RibbonLink
-        url="https://toshihito-endo.com/weather-cereal"
+        url="https://toshihito-endo.com/work/weathercereal"
         text="Case Study"
       />
     </main>
