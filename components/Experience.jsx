@@ -22,7 +22,7 @@ export default function Experience({
 
   return (
     <>
-      {/* <Perf position="top-left" /> */}
+      <Perf position="top-left" />
       {/* <axesHelper visible={true} /> */}
 
       <OrbitControls
@@ -38,7 +38,7 @@ export default function Experience({
 
       <PostProcessingEffects depthOfField={isDepthOfField} />
 
-      {showDataRelatedModels && <FloatingSakuraPetals petalNum={80} />}
+      {showDataRelatedModels && <FloatingSakuraPetals petalNum={50} />}
 
       <Physics debug={false} gravity={[0, GRAVITY, 0]}>
         <RigidBody type="fixed" restitution={0.1} position={[0, -0.5, 0]}>

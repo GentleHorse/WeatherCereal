@@ -16,14 +16,15 @@ export default function PostProcessingEffects({ depthOfField = true }) {
   // });
 
   return (
-    <EffectComposer disableNormalPass>
-      <N8AO aoRadius={0.5} intensity={1} />
+    <EffectComposer disableNormalPass multisampling={0}>
+      <N8AO aoRadius={0.5} intensity={1} quality="medium" />
       {!!depthOfField && (
         <DepthOfField
           // {...depthOfFieldConfig}
           focusRange={0.045}
-          bokehScale={10}
+          bokehScale={8}
           target={[0, 0, 0]}
+          resolutionScale={0.5}
         />
       )}
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />

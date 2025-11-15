@@ -5,7 +5,7 @@ import { Geometry, Base, Addition } from "@react-three/csg";
 import WeatherAudio from "../weatherAudio/WeatherAudio.jsx";
 import weatherConditionConverter from "@/utils/weatherConditionConverter.js";
 
-const Icon_Model_Num = 70;
+const Icon_Model_Num = 40; // Reduced from 70 for better performance
 const Icon_Model_Scale = 0.035;
 const Icon_Model_Area_X = 1.75;
 const Icon_Model_Area_Y = 2.5;

@@ -12,7 +12,7 @@ export default function CustomEnvironment({ backgroundColor }) {
       <directionalLight
         intensity={2.25}
         position={[-20, 20, 5]}
-        shadow-mapSize={[256, 256]}
+        shadow-mapSize={[512, 512]}
         shadow-bias={-0.0001}
         castShadow
       >
@@ -25,7 +25,7 @@ export default function CustomEnvironment({ backgroundColor }) {
         scale={40.0}
       />
 
-      <Environment resolution={16}>
+      <Environment resolution={32}>
         <Lightformer position={[10, 10, 10]} scale={10} intensity={2} />
         <Lightformer
           position={[10, 0, -10]}

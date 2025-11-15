@@ -287,8 +287,15 @@ export default function ThreeScene() {
       <Canvas
         flat
         shadows
-        gl={{ antialias: false }}
+        gl={{ 
+          antialias: false,
+          powerPreference: "high-performance",
+          stencil: false,
+          depth: true
+        }}
+        dpr={[1, 1.5]}
         camera={{ position: [8, 10, 15], near: 10, far: 55, fov: 12 }}
+        performance={{ min: 0.5 }}
       >
         <Suspense fallback={<LoadingScene3D />}>
           {weather && (
