@@ -22,7 +22,7 @@ export default function Experience({
 
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
       {/* <axesHelper visible={true} /> */}
 
       <OrbitControls
